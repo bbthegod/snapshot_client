@@ -5,6 +5,7 @@ import { FeedPageState } from './types';
 
 export const initialState: FeedPageState = {
   posts: [],
+  suggests: [],
   loading: false,
   success: false,
   failures: false,
@@ -20,12 +21,28 @@ const slice = createSlice({
       state.failures = false;
     },
     getSuccess(state, action) {
-      state.posts = action.payload.data;
+      state.posts = action.payload;
       state.loading = false;
       state.success = true;
       state.failures = false;
     },
     getFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    getSuggestion(state) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    getSuggestionSuccess(state, action) {
+      state.suggests = action.payload;
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    getSuggestionFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;

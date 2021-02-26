@@ -21,6 +21,8 @@ export function Post(props: Props) {
   const classes = useStyles();
   const history = useHistory();
   const [seeMore, setSeeMore] = useState(true);
+  const [numberOfComments, setNumberOfComments] = useState(-1);
+  const [comments, setCommets] = useState<string[]>([]);
   const [liked, setLiked] = useState(data.isUserLiked);
   const [trimmed, setTrimmed] = useState<string[]>([]);
   const inputRef = useRef(document.createElement('input'));
@@ -28,6 +30,19 @@ export function Post(props: Props) {
     const array: string[] = data.caption.split('\n');
     setTrimmed(array);
   }, [data.caption]);
+  useEffect(() => {
+    if (data.comments) {
+      request({
+        method: 'GET',
+        url: `/comment/${data._id}?limit=3`,
+      }).then(result => {
+        if (result) {
+          setCommets(result.data);
+          setNumberOfComments(result.count);
+        }
+      });
+    }
+  }, [data._id, data.comments]);
   function likeComment() {
     request({
       method: 'POST',
@@ -40,17 +55,27 @@ export function Post(props: Props) {
     });
   }
   function comment() {
+    setContent('');
     request({
       method: 'POST',
       url: `/comment/${data._id}`,
       data: { content: content },
+    }).then(result => {
+      request({
+        method: 'GET',
+        url: `/comment/${data._id}?limit=3`,
+      }).then(result => {
+        if (result) {
+          setCommets(result.data);
+          setNumberOfComments(result.count);
+        }
+      });
     });
   }
-  console.log(data);
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Avatar id={data.author.avatar ? data.author._id : null} alt="avatar" className={classes.avatar} />
+        <Avatar id={data.author.avatar ? data.author._id : null} alt="avatar" className={classes.avatar} size="small" />
         <div className={classes.nameWrapper}>
           <p className={classes.name}>{data.author.username}</p>
           <img src={more} alt="more" className={classes.more} />
@@ -62,7 +87,9 @@ export function Post(props: Props) {
         <img src={commentIcon} alt="comment" className={classes.like} onClick={() => inputRef.current.focus()} />
       </div>
       <div className={classes.likeCount}>
-        {data.likes > 0 && <p className={classes.liekCountText}>{data.likes} lượt thích</p>}
+        {(data.likes > 0 || (data.likes === 0 && liked)) && (
+          <p className={classes.liekCountText}>{liked ? data.likes + 1 : data.likes} lượt thích</p>
+        )}
       </div>
       <div className={classes.commentWrapper}>
         <div className={classes.captionsWrapper}>
@@ -77,32 +104,30 @@ export function Post(props: Props) {
           </span>
           <pre className={classes.afterLine}>{trimmed && trimmed[1] && !seeMore && trimmed[1]}</pre>
           <div className={classes.seeAllCommentsWrapper}>
-            {data.comments > 3 && (
+            {numberOfComments > 3 && numberOfComments !== -1 && (
               <p
                 className={classes.seeAllComments}
                 onClick={() => {
                   history.push(`/p/${data._id}`);
                 }}
               >
-                Xem tất cả {data.comments} bình luận
+                Xem tất cả {numberOfComments} bình luận
               </p>
             )}
           </div>
-          {data.commentList.map(item => (
-            <MiniComment data={item} key={item._id} />
-          ))}
+          {comments ? comments.map((item, index) => <MiniComment data={item} key={index} />) : null}
           <div className={classes.timestampWapper}>
             <p className={classes.timestamp}>{timeSince(data.createdAt)}</p>
           </div>
         </div>
       </div>
-      <div className={classes.typeAreWapper}>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            comment();
-          }}
-        >
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          comment();
+        }}
+      >
+        <div className={classes.typeAreWapper}>
           <input
             type="text"
             className={classes.input}
@@ -113,8 +138,8 @@ export function Post(props: Props) {
             }}
             value={content}
           />
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }

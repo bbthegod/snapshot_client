@@ -35,7 +35,7 @@ export default function CommentReply(props: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.avatarWrapper}>
-        <Avatar id={data.avatar ? data._id : null} alt="avatar" className={classes.avatar} />
+        <Avatar id={data.avatar ? data._id : null} alt="avatar" className={classes.avatar} size="small" />
       </div>
       <div className={classes.contentWrapper}>
         <div className={classes.name}>{data.author}</div>

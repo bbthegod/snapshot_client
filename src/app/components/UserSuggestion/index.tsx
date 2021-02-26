@@ -1,9 +1,9 @@
 import React from 'react';
 import useStyles from './styles';
+import Avatar from '../Avatar';
 
 interface Props {
-  Avatar: any;
-  Name: string;
+  data: any;
   Content: string;
   FollowFunction: Function;
   LinkFunction: Function;
@@ -11,13 +11,13 @@ interface Props {
 
 export function UserSuggestion(props: Props) {
   const classes = useStyles();
-  const { Avatar, Name, Content, FollowFunction, LinkFunction } = props;
+  const { data, Content, FollowFunction, LinkFunction } = props;
   return (
     <div className={classes.root}>
-      <img src={Avatar} alt="avatar" className={classes.image} onClick={() => LinkFunction()} />
+      <Avatar id={data.avatar ? data._id : null} alt="avatar" className={classes.image} size="small" />
       <div className={classes.main}>
         <span className={classes.name} onClick={() => LinkFunction()}>
-          {Name}
+          {data.username}
         </span>
         <span className={classes.content}>{Content}</span>
       </div>

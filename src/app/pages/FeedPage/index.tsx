@@ -9,7 +9,6 @@ import { useFeedPageSlice } from './slice';
 import { selectFeedPage } from './slice/selectors';
 import { Post } from 'app/components/Post';
 import { UserSuggestion } from 'app/components/UserSuggestion';
-import nasmall from '../../../images/nasmall.jpg';
 import useStyles from './styles';
 
 interface Props {}
@@ -17,10 +16,11 @@ interface Props {}
 export function FeedPage(props: Props) {
   const classes = useStyles();
   const { actions } = useFeedPageSlice();
-  const { posts } = useSelector(selectFeedPage);
+  const { posts, suggests } = useSelector(selectFeedPage);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.get());
+    dispatch(actions.getSuggestion());
   }, [actions, dispatch]);
   return (
     <div className={classes.root}>
@@ -31,15 +31,10 @@ export function FeedPage(props: Props) {
             <div className={classes.suggestText1}>Gợi ý cho bạn</div>
             <div className={classes.suggestText2}>Xem tất cả</div>
           </div>
-          {[1, 2, 3].map(() => (
-            <UserSuggestion
-              Avatar={nasmall}
-              Name="_.tungnt"
-              Content="Gợi ý cho bạn"
-              FollowFunction={() => {}}
-              LinkFunction={() => {}}
-            />
-          ))}
+          {suggests &&
+            suggests.map(item => (
+              <UserSuggestion data={item} Content="Gợi ý cho bạn" FollowFunction={() => {}} LinkFunction={() => {}} />
+            ))}
         </div>
       </div>
     </div>

@@ -18,6 +18,22 @@ export function* get(payload) {
   }
 }
 
+export function* getSuggestion(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'GET',
+      url: `/follow`,
+    });
+    if (respone) {
+      yield put(actions.getSuggestionSuccess(respone));
+    } else {
+      yield put(actions.getSuggestionFailures());
+    }
+  } catch (err) {
+    yield put(actions.getSuggestionFailures());
+  }
+}
 export function* feedPageSaga() {
   yield takeLatest(actions.get.type, get);
+  yield takeLatest(actions.getSuggestion.type, getSuggestion);
 }

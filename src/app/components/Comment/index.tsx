@@ -52,7 +52,12 @@ export default function Comment(props: Props) {
     <div className={classes.root}>
       <div className={classes.top}>
         <div className={classes.avatarWrapper}>
-          <Avatar id={data.userId.avatar ? data.userId._id : null} alt="avatar" className={classes.avatar} />
+          <Avatar
+            id={data.userId.avatar ? data.userId._id : null}
+            alt="avatar"
+            className={classes.avatar}
+            size="small"
+          />
         </div>
         <div className={classes.contentWrapper}>
           <div className={classes.name}>{data.author}</div>
