@@ -77,7 +77,9 @@ export function Post(props: Props) {
       <div className={classes.header}>
         <Avatar id={data.author.avatar ? data.author._id : null} alt="avatar" className={classes.avatar} size="small" />
         <div className={classes.nameWrapper}>
-          <p className={classes.name}>{data.author.username}</p>
+          <p className={classes.name} onClick={() => history.push(`/u/${data.author.username}`)}>
+            {data.author.username}
+          </p>
           <img src={more} alt="more" className={classes.more} />
         </div>
       </div>

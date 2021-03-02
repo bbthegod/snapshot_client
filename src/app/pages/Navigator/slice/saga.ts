@@ -15,6 +15,23 @@ export function* get() {
   }
 }
 
+export function* search(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'GET',
+      url: `/user/search/user?username=${payload.payload}`,
+    });
+    if (respone) {
+      yield put(actions.searchSuccess(respone));
+    } else {
+      yield put(actions.searchFailures());
+    }
+  } catch (err) {
+    yield put(actions.searchFailures());
+  }
+}
+
 export function* navigatorSaga() {
   yield takeLatest(actions.get.type, get);
+  yield takeLatest(actions.search.type, search);
 }

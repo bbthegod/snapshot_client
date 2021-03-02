@@ -33,7 +33,27 @@ export function* getSuggestion(payload) {
     yield put(actions.getSuggestionFailures());
   }
 }
+
+export function* follow(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'POST',
+      url: `/follow/`,
+      data: { followingId: payload.payload },
+    });
+    if (respone) {
+      yield put(actions.followSuccess(respone));
+      yield put(actions.getSuggestion());
+    } else {
+      yield put(actions.followFailures());
+    }
+  } catch (err) {
+    yield put(actions.followFailures());
+  }
+}
+
 export function* feedPageSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.getSuggestion.type, getSuggestion);
+  yield takeLatest(actions.follow.type, follow);
 }

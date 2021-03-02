@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     padding: '30px 20px 0px 20px',
     display: 'flex',
     justifyContent: 'center',
+    marginTop: 55,
   },
   postWrapper: {
     width: 614,

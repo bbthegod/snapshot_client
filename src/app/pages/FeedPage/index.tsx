@@ -33,7 +33,13 @@ export function FeedPage(props: Props) {
           </div>
           {suggests &&
             suggests.map(item => (
-              <UserSuggestion data={item} Content="Gợi ý cho bạn" FollowFunction={() => {}} LinkFunction={() => {}} />
+              <UserSuggestion
+                data={item}
+                Content="Gợi ý cho bạn"
+                FollowFunction={() => {
+                  dispatch(actions.follow(item._id));
+                }}
+              />
             ))}
         </div>
       </div>

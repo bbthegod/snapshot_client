@@ -18,6 +18,23 @@ export function* get(payload) {
   }
 }
 
+export function* follow(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'POST',
+      url: `/follow/`,
+      data: { followingId: payload.payload },
+    });
+    if (respone) {
+      yield put(actions.followSuccess(respone));
+    } else {
+      yield put(actions.followFailures());
+    }
+  } catch (err) {
+    yield put(actions.followFailures());
+  }
+}
+
 export function* getPost(payload) {
   try {
     const respone = yield call(request, {
@@ -34,7 +51,26 @@ export function* getPost(payload) {
   }
 }
 
+export function* getSaved(payload) {
+  console.log(payload);
+  try {
+    const respone = yield call(request, {
+      method: 'GET',
+      url: `/savedPost/user/${payload.payload}`,
+    });
+    if (respone) {
+      yield put(actions.getSavedSuccess(respone));
+    } else {
+      yield put(actions.getSavedFailures());
+    }
+  } catch (err) {
+    yield put(actions.getSavedFailures());
+  }
+}
+
 export function* profilePageSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.getPost.type, getPost);
+  yield takeLatest(actions.getSaved.type, getSaved);
+  yield takeLatest(actions.follow.type, follow);
 }

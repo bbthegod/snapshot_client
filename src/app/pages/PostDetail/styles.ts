@@ -6,11 +6,12 @@ const useStyles = makeStyles({
     width: '100%',
   },
   paper: {
+    margin: 50,
+    marginTop: 95,
     width: 935,
     height: 600,
     background: '#FFFFFF',
     border: '1px solid #dbdbdb',
-    margin: 50,
     display: 'flex',
   },
   image: {
@@ -146,5 +147,11 @@ const useStyles = makeStyles({
     fontWeight: 600,
     cursor: 'pointer',
   },
+  notFoundWrapper: {
+    padding: 40,
+    width: '100%',
+  },
+  notFound1: { fontSize: 22, color: '#262626', textAlign: 'center', fontWeight: 600 },
+  notFound2: { fontSize: 16, color: '#262626', textAlign: 'center', fontWeight: 400 },
 });
 export default useStyles;

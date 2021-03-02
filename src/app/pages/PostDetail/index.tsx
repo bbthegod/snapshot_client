@@ -22,9 +22,9 @@ export function PostDetail(props: Props) {
   const [commentId, setCommentId] = useState();
   const [status, setStatus] = useState(0);
   const { actions } = usePostDetailSlice();
-  const { data, following, comments, liked } = useSelector(selectPostDetail);
-  const inputRef = useRef(document.createElement('input'));
+  const { data, failures, following, comments, liked } = useSelector(selectPostDetail);
   const dispatch = useDispatch();
+  const inputRef = useRef(document.createElement('input'));
   useEffect(() => {
     if (props.match.params.post) {
       dispatch(actions.get(props.match.params.post));
@@ -60,7 +60,7 @@ export function PostDetail(props: Props) {
     }
     return null;
   }
-  return data && comments ? (
+  return data && comments && !failures ? (
     <div className={classes.root}>
       <div className={classes.paper}>
         <img src={`${HOST}/post/${data.author._id}/${data._id}/original.jpg`} alt="postimg" className={classes.image} />
@@ -86,7 +86,11 @@ export function PostDetail(props: Props) {
           <div className={classes.commentWrapper}>
             <div className={classes.captionWrapper}>
               <div className={classes.captionAvatarWrapper}>
-                <img src={data.author.avatar ? `${HOST}/avatar/${data.author._id}/medium.jpg` : nasmall} alt="avatar" />
+                <img
+                  src={data.author.avatar ? `${HOST}/avatar/${data.author._id}/medium.jpg` : nasmall}
+                  alt="avatar"
+                  className={classes.avatar}
+                />
               </div>
               <div className={classes.contentWrapper2}>
                 <div className={classes.captionName}>{data.author.username}</div>
@@ -143,5 +147,10 @@ export function PostDetail(props: Props) {
         </div>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className={classes.notFoundWrapper}>
+      <h2 className={classes.notFound1}>Rất tiếc, trang này hiện không khả dụng.</h2>
+      <h2 className={classes.notFound2}>Liên kết bạn theo dõi có thể bị hỏng hoặc trang này có thể đã bị gỡ.</h2>
+    </div>
+  );
 }

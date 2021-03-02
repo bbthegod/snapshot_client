@@ -31,6 +31,21 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
+    follow(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    followSuccess(state, action) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    followFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
     getSuggestion(state) {
       state.loading = true;
       state.success = false;

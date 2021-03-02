@@ -6,6 +6,8 @@ import { ProfilePageState } from './types';
 export const initialState: ProfilePageState = {
   user: {},
   posts: [],
+  saved: [],
+  following: false,
   loading: false,
   success: false,
   failures: false,
@@ -22,11 +24,28 @@ const slice = createSlice({
     },
     getSuccess(state, action) {
       state.user = action.payload;
+      state.following = action.payload.isUserFollowing;
       state.loading = false;
       state.success = true;
       state.failures = false;
     },
     getFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    follow(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    followSuccess(state, action) {
+      state.following = action.payload.status;
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    followFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;
@@ -43,6 +62,22 @@ const slice = createSlice({
       state.failures = false;
     },
     getPostFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    getSaved(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    getSavedSuccess(state, action) {
+      state.saved = action.payload;
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    getSavedFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;

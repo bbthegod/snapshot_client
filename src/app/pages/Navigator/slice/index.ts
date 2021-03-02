@@ -5,6 +5,7 @@ import { NavigatorState } from './types';
 
 export const initialState: NavigatorState = {
   data: [],
+  searchData: [],
   loading: false,
   success: false,
   failures: false,
@@ -26,6 +27,22 @@ const slice = createSlice({
       state.failures = false;
     },
     getFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    search(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    searchSuccess(state, action) {
+      state.searchData = action.payload;
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    searchFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;
