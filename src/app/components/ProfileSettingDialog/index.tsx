@@ -3,7 +3,8 @@
  * ProfileMoreDialog
  *
  */
-import * as React from 'react';
+import React, { useRef } from 'react';
+import useOutsideClick from 'utils/useOutsideClick';
 import useStyles from './styles';
 
 interface Props {
@@ -15,23 +16,27 @@ interface Props {
 
 export default function ProfileSettingDialog(props: Props) {
   const classes = useStyles();
+  const ref = useRef(document.createElement('div'));
+  useOutsideClick(ref, () => {
+    props.setOpen();
+  });
   return (
-    <div className={classes.dialog}>
-      <div className={classes.dialogContent}>
-        <div className={classes.dialogItemWrapper1st} onClick={() => props.changePassword()}>
-          <p className={classes.dialogItemText}>Đổi mật khẩu</p>
+    <div className={classes.root}>
+      <div className={classes.wrapper} ref={ref}>
+        <div className={classes.item} onClick={() => props.changePassword()}>
+          <p className={classes.text}>Đổi mật khẩu</p>
         </div>
-        <div className={classes.dialogItemWrapper}>
-          <p className={classes.dialogItemText}>Bảo mật và quyền riêng tư</p>
+        <div className={classes.item}>
+          <p className={classes.text}>Bảo mật và quyền riêng tư</p>
         </div>
-        <div className={classes.dialogItemWrapper} onClick={() => props.report()}>
-          <p className={classes.dialogItemText}>Báo cáo sự cố</p>
+        <div className={classes.item} onClick={() => props.report()}>
+          <p className={classes.text}>Báo cáo sự cố</p>
         </div>
-        <div className={classes.dialogItemWrapper} onClick={() => props.logout()}>
-          <p className={classes.dialogItemText}>Đăng xuất</p>
+        <div className={classes.item} onClick={() => props.logout()}>
+          <p className={classes.text}>Đăng xuất</p>
         </div>
-        <div className={classes.dialogItemWrapperLast} onClick={() => props.setOpen()}>
-          <p className={classes.dialogItemText}>Hủy</p>
+        <div className={classes.item} onClick={() => props.setOpen()}>
+          <p className={classes.text}>Hủy</p>
         </div>
       </div>
     </div>

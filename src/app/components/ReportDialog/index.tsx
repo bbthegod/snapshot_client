@@ -10,6 +10,7 @@ import useStyles from './styles';
 interface Props {
   setOpen: any;
   report: any;
+  isUser: any;
 }
 
 interface Props {}
@@ -23,10 +24,10 @@ export default function ReportDialog(props: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.wrapper} ref={ref}>
-        <div className={classes.item} onClick={() => props.report(0, 0)}>
+        <div className={classes.item} onClick={() => props.report(props.isUser ? 1 : 0, 0)}>
           <p className={classes.textRed}>Đây là spam</p>
         </div>
-        <div className={classes.item} onClick={() => props.report(0, 1)}>
+        <div className={classes.item} onClick={() => props.report(props.isUser ? 1 : 0, 1)}>
           <p className={classes.textRed}>Nội dung không phù hợp</p>
         </div>
         <div className={classes.item} onClick={() => props.setOpen()}>

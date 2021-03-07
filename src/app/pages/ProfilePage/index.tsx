@@ -25,21 +25,26 @@ interface Props {
 
 export function ProfilePage(props: Props) {
   const userId = localStorage.getItem('id');
-  const classes = useStyles();
-  const { actions } = useProfilePageSlice();
-  const dispatch = useDispatch();
-  const { user, failures, posts, saved, following } = useSelector(selectProfilePage);
+  //================================================================
   const [tab, setTab] = useState(1);
   const [openSetting, setOpenSetting] = useState(false);
   const [openMore, setOpenMore] = useState(false);
   const [openFollow, setOpenFollow] = useState(false);
+  //================================================================
+  const classes = useStyles();
+  const { actions } = useProfilePageSlice();
+  const dispatch = useDispatch();
+  const { user, failures, posts, saved, following } = useSelector(selectProfilePage);
+  //================================================================
   useEffect(() => {
     dispatch(actions.getPost(props.match.params.username));
     dispatch(actions.getSaved(props.match.params.username));
   }, [actions, dispatch, props.match.params.username]);
+
   useEffect(() => {
     dispatch(actions.get(props.match.params.username));
   }, [actions, dispatch, props.match.params.username, following]);
+  //================================================================
   return (
     <div>
       {user && !failures ? (
@@ -103,7 +108,6 @@ export function ProfilePage(props: Props) {
             </div>
             <Tab tab={tab} setTab={setTab}>
               {tab === 1 &&
-                posts &&
                 posts.map((item, index) => (
                   <ProfilePost
                     key={index}
@@ -113,7 +117,6 @@ export function ProfilePage(props: Props) {
                   />
                 ))}
               {tab === 2 &&
-                saved &&
                 saved.map((item, index) => (
                   <ProfilePost
                     key={index}
@@ -141,7 +144,17 @@ export function ProfilePage(props: Props) {
           }}
         />
       )}
-      {openMore && <ProfileMoreDialog block={() => {}} report={() => {}} setOpen={() => setOpenMore(false)} />}
+      {openMore && (
+        <ProfileMoreDialog
+          block={() => {}}
+          report={(object, reasons) => {
+            dispatch(actions.report({ object, reasons }));
+            setOpenMore(false);
+            alert('Cảm ơn bạn đã báo cáo cho chúng tôi.');
+          }}
+          setOpen={() => setOpenMore(false)}
+        />
+      )}
       {openFollow && (
         <FollowDialog
           unfollow={() => {

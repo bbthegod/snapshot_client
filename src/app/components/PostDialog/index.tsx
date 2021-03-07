@@ -29,12 +29,7 @@ export default function PostDialog(props: Props) {
       {status === 1 && (
         <div className={classes.root}>
           <div className={classes.wrapper} ref={ref}>
-            <div
-              className={classes.item}
-              onClick={() => {
-                setStatus(2);
-              }}
-            >
+            <div className={classes.item} onClick={() => setStatus(2)}>
               <p className={classes.textRed}>Báo cáo</p>
             </div>
             <div className={classes.item} onClick={() => props.unfollow()}>
@@ -53,7 +48,11 @@ export default function PostDialog(props: Props) {
         </div>
       )}
       {status === 2 && (
-        <ReportDialog setOpen={() => setStatus(1)} report={(object, reasons) => props.report(object, reasons)} />
+        <ReportDialog
+          setOpen={() => setStatus(1)}
+          report={(object, reasons) => props.report(object, reasons)}
+          isUser={false}
+        />
       )}
     </>
   );

@@ -1,23 +1,24 @@
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
-  dialog: {
+  root: {
     width: '100%',
     height: '100%',
     background: 'rgba(0,0,0,.65)',
     zIndex: 999,
     position: 'fixed',
     top: 0,
-    overflow: 'hidden',
+    left: 0,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  dialogContent: {
+  wrapper: {
     borderRadius: 12,
     width: 400,
     background: '#FFFFFF',
+    overflow: 'hidden',
   },
-  dialogItemWrapper: {
+  item: {
     width: 400,
     height: 48,
     padding: '4px 8px',
@@ -28,37 +29,12 @@ const useStyles = makeStyles({
     borderBottom: '1px solid #dbdbdb',
     cursor: 'pointer',
   },
-  dialogItemWrapper1st: {
-    width: 400,
-    height: 48,
-    padding: '4px 8px',
-    background: '#FFFFFF',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottom: '1px solid #dbdbdb',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    cursor: 'pointer',
-  },
-  dialogItemWrapperLast: {
-    width: 400,
-    height: 48,
-    padding: '4px 8px',
-    background: '#FFFFFF',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    cursor: 'pointer',
-  },
-  dialogItemText: {
+  text: {
     padding: 0,
     margin: 0,
     fontSize: 14,
   },
-  dialogItemTextRed: {
+  textRed: {
     padding: 0,
     margin: 0,
     fontSize: 14,

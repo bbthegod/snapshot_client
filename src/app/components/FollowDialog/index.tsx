@@ -3,7 +3,8 @@
  * FollowDialog
  *
  */
-import * as React from 'react';
+import React, { useRef } from 'react';
+import useOutsideClick from 'utils/useOutsideClick';
 import useStyles from './styles';
 
 interface Props {
@@ -15,14 +16,18 @@ interface Props {}
 
 export default function FollowDialog(props: Props) {
   const classes = useStyles();
+  const ref = useRef(document.createElement('div'));
+  useOutsideClick(ref, () => {
+    props.setOpen();
+  });
   return (
-    <div className={classes.dialog}>
-      <div className={classes.dialogContent}>
-        <div className={classes.dialogItemWrapper1st} onClick={() => props.unfollow()}>
-          <p className={classes.dialogItemTextRed}>Bỏ theo dõi</p>
+    <div className={classes.root}>
+      <div className={classes.wrapper} ref={ref}>
+        <div className={classes.item} onClick={() => props.unfollow()}>
+          <p className={classes.textRed}>Bỏ theo dõi</p>
         </div>
-        <div className={classes.dialogItemWrapperLast} onClick={() => props.setOpen()}>
-          <p className={classes.dialogItemText}>Hủy</p>
+        <div className={classes.item} onClick={() => props.setOpen()}>
+          <p className={classes.text}>Hủy</p>
         </div>
       </div>
     </div>

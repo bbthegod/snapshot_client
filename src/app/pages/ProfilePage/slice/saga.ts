@@ -68,9 +68,27 @@ export function* getSaved(payload) {
   }
 }
 
+export function* report(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'POST',
+      url: `/report/`,
+      data: { object: payload.payload.object, reasons: payload.payload.reasons },
+    });
+    if (respone) {
+      yield put(actions.reportSuccess());
+    } else {
+      yield put(actions.reportFailures());
+    }
+  } catch (err) {
+    yield put(actions.reportFailures());
+  }
+}
+
 export function* profilePageSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.getPost.type, getPost);
   yield takeLatest(actions.getSaved.type, getSaved);
   yield takeLatest(actions.follow.type, follow);
+  yield takeLatest(actions.report.type, report);
 }
