@@ -62,6 +62,21 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
+    report(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    reportSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    reportFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
   },
 });
 

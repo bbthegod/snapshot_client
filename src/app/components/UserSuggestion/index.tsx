@@ -5,14 +5,14 @@ import Avatar from '../Avatar';
 
 interface Props {
   data: any;
-  Content: string;
-  FollowFunction: Function;
+  content: any;
+  follow: Function;
 }
 
 export function UserSuggestion(props: Props) {
   const classes = useStyles();
   const history = useHistory();
-  const { data, Content, FollowFunction } = props;
+  const { data, content, follow } = props;
   return (
     <div className={classes.root}>
       <Avatar id={data.avatar ? data._id : null} alt="avatar" className={classes.image} size="small" />
@@ -20,9 +20,9 @@ export function UserSuggestion(props: Props) {
         <span className={classes.name} onClick={() => history.push(`/u/${data.username}`)}>
           {data.username}
         </span>
-        <span className={classes.content}>{Content}</span>
+        <span className={classes.content}>{content}</span>
       </div>
-      <div className={classes.follow} onClick={() => FollowFunction()}>
+      <div className={classes.follow} onClick={() => follow()}>
         Theo dõi
       </div>
     </div>

@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     width: '100%',
     left: 0,
     right: 0,
-    zIndex: 9999,
+    zIndex: 998,
   },
   logoBox: {
     height: 55,

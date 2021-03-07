@@ -38,6 +38,7 @@ const useStyles = makeStyles({
     float: 'right',
     width: 16,
     height: 16,
+    cursor: 'pointer',
   },
   imgPost: {
     width: 614,
