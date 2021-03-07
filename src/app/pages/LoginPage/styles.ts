@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textAlign: 'center',
-    fontFamily: 'Sofia',
+    fontFamily: 'Pacifico',
     fontSize: 40,
     fontWeight: 400,
   },

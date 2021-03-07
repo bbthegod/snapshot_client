@@ -33,6 +33,7 @@ const useStyles = makeStyles({
     color: '#262626',
     width: 83,
     fontWeight: 600,
+    cursor: 'pointer',
   },
 });
 export default useStyles;

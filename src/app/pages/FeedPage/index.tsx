@@ -4,6 +4,7 @@
  *
  */
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFeedPageSlice } from './slice';
 import { selectFeedPage } from './slice/selectors';
@@ -15,6 +16,7 @@ interface Props {}
 
 export function FeedPage(props: Props) {
   const classes = useStyles();
+  const history = useHistory();
   const { actions } = useFeedPageSlice();
   const { posts, suggests } = useSelector(selectFeedPage);
   const dispatch = useDispatch();
@@ -38,7 +40,9 @@ export function FeedPage(props: Props) {
         <div className={classes.suggestWrapper}>
           <div className={classes.suggestHeader}>
             <div className={classes.suggestText1}>Gợi ý cho bạn</div>
-            <div className={classes.suggestText2}>Xem tất cả</div>
+            <div className={classes.suggestText2} onClick={() => history.push('/suggest')}>
+              Xem tất cả
+            </div>
           </div>
           {suggests.map(item => (
             <UserSuggestion data={item} content="Gợi ý cho bạn" follow={() => dispatch(actions.follow(item._id))} />

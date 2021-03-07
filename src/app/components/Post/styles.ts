@@ -25,14 +25,16 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  nameBox: {
+    width: 520,
+  },
   name: {
     padding: 0,
     margin: 0,
-    float: 'left',
     fontWeight: 600,
     cursor: 'pointer',
     fontSize: 14,
-    width: 520,
+    display: 'inline-block',
   },
   more: {
     float: 'right',

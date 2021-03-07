@@ -95,9 +95,11 @@ export function Post(props: Props) {
             size="small"
           />
           <div className={classes.nameWrapper}>
-            <p className={classes.name} onClick={() => history.push(`/u/${data.author.username}`)}>
-              {data.author.username}
-            </p>
+            <div className={classes.nameBox}>
+              <p className={classes.name} onClick={() => history.push(`/u/${data.author.username}`)}>
+                {data.author.username}
+              </p>
+            </div>
             <img src={more} alt="more" className={classes.more} onClick={() => setOpen(true)} />
           </div>
         </div>
