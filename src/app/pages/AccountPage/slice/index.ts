@@ -1,18 +1,17 @@
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-import { suggestionPageSaga } from './saga';
-import { SuggestionPageState } from './types';
+import { accountPageSaga } from './saga';
+import { AccountPageState } from './types';
 
-export const initialState: SuggestionPageState = {
-  data: [],
-  suggests: [],
+export const initialState: AccountPageState = {
+  user: {},
   loading: false,
   success: false,
   failures: false,
 };
 
 const slice = createSlice({
-  name: 'suggestionPage',
+  name: 'accountPage',
   initialState,
   reducers: {
     get(state) {
@@ -21,7 +20,7 @@ const slice = createSlice({
       state.failures = false;
     },
     getSuccess(state, action) {
-      state.suggests = action.payload;
+      state.user = action.payload;
       state.loading = false;
       state.success = true;
       state.failures = false;
@@ -31,17 +30,17 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
-    follow(state, payload) {
+    update(state, payload) {
       state.loading = true;
       state.success = false;
       state.failures = false;
     },
-    followSuccess(state, action) {
+    updateSuccess(state) {
       state.loading = false;
       state.success = true;
       state.failures = false;
     },
-    followFailures(state) {
+    updateFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;
@@ -49,10 +48,10 @@ const slice = createSlice({
   },
 });
 
-export const { actions: suggestionPageActions } = slice;
+export const { actions: accountPageActions } = slice;
 
-export const useSuggestionPageSlice = () => {
+export const useAccountPageSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
-  useInjectSaga({ key: slice.name, saga: suggestionPageSaga });
+  useInjectSaga({ key: slice.name, saga: accountPageSaga });
   return { actions: slice.actions };
 };

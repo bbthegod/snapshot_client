@@ -5,6 +5,7 @@ import { NavigatorState } from 'app/pages/Navigator/slice/types';
 import { FeedPageState } from 'app/pages/FeedPage/slice/types';
 import { PostDetailState } from 'app/pages/PostDetail/slice/types';
 import { SuggestionPageState } from 'app/pages/SuggestionPage/slice/types';
+import { AccountPageState } from 'app/pages/AccountPage/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 export interface RootState {
@@ -15,5 +16,6 @@ export interface RootState {
   feedPage?: FeedPageState;
   postDetail?: PostDetailState;
   suggestionPage?: SuggestionPageState;
+  accountPage?: AccountPageState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

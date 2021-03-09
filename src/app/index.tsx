@@ -19,6 +19,7 @@ import { SignupPage } from './pages/SignupPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { PostDetail } from './pages/PostDetail';
 import { SuggestionPage } from './pages/SuggestionPage';
+import { AccountPage } from './pages/AccountPage';
 import PrivateRoutes from './components/PrivateRoutes';
 import Navigator from './pages/Navigator';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
@@ -37,6 +38,7 @@ export function App() {
         <PrivateRoutes path="/p/:post" component={PostDetail} layout={Navigator} />
         <PrivateRoutes path="/u/:username" component={ProfilePage} layout={Navigator} />
         <PrivateRoutes path="/suggest" component={SuggestionPage} layout={Navigator} />
+        <PrivateRoutes path="/account" component={AccountPage} layout={Navigator} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
