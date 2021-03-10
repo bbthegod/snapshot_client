@@ -8,6 +8,7 @@ import useStyles from './styles';
 import NotificationBox from '../../components/NotificationBox';
 import SearchBox from '../../components/SearchBox';
 import AvatarBox from '../../components/AvatarBox';
+import Snackbar from '../../components/Snackbar';
 import Avatar from '../../components/Avatar';
 import home from '../../../images/home.svg';
 import homeActive from '../../../images/home-active.svg';
@@ -18,6 +19,7 @@ export default function Navigator() {
   const [avatarDropdown, setAvatarDropdown] = useState(false);
   const [notiDropdown, setNotiDropdown] = useState(false);
   const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
   //======================================
   const { actions } = useNavigatorSlice();
   const { searchData, loading } = useSelector(selectNavigator);
@@ -46,40 +48,44 @@ export default function Navigator() {
     setSearch('');
   });
   return (
-    <nav className={classes.root}>
-      <div className={classes.logoBox}>
-        <p className={classes.logo} onClick={() => history.push('/')}>
-          SnapShot
-        </p>
-      </div>
-      <div className={classes.searchBox}>
-        <input
-          className={classes.search}
-          placeholder="Tìm kiếm"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-      </div>
-      {search !== '' && searchData && !loading && <SearchBox data={searchData} setSearch={setSearch} />}
-      <div className={classes.iconBox}>
-        <img
-          alt="home"
-          src={path[1] === '' ? homeActive : home}
-          className={classes.home}
-          onClick={() => history.push('/')}
-        />
-        <div className={classes.dropdownWapper} onClick={() => setNotiDropdown(!notiDropdown)} ref={refNoti}>
-          <img alt="noti" src={notiDropdown ? notiActive : noti} className={classes.centerIcon} />
-          {notiDropdown && <NotificationBox />}
+    <>
+      <nav className={classes.root}>
+        <div className={classes.logoBox}>
+          <p className={classes.logo} onClick={() => history.push('/')}>
+            SnapShot
+          </p>
         </div>
-        <div className={classes.dropdownWapper} ref={refUser} onClick={() => setAvatarDropdown(!avatarDropdown)}>
-          <Avatar id={avatar ? id : null} alt="avatar" className={classes.avatar} size="small" />
-          {path[1] === 'u' && (
-            <div className={classes.avatarCircle} onClick={() => setAvatarDropdown(!avatarDropdown)} />
-          )}
-          {avatarDropdown && <AvatarBox setAvatarDropdown={setAvatarDropdown} />}
+        <div className={classes.searchBox}>
+          <input
+            className={classes.search}
+            placeholder="Tìm kiếm"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
-      </div>
-    </nav>
+        {search !== '' && searchData && !loading && <SearchBox data={searchData} setSearch={setSearch} />}
+        <div className={classes.iconBox}>
+          <img
+            alt="home"
+            src={path[1] === '' ? homeActive : home}
+            className={classes.home}
+            onClick={() => setOpen(!open)}
+            // onClick={() => history.push('/')}
+          />
+          <div className={classes.dropdownWapper} onClick={() => setNotiDropdown(!notiDropdown)} ref={refNoti}>
+            <img alt="noti" src={notiDropdown ? notiActive : noti} className={classes.centerIcon} />
+            {notiDropdown && <NotificationBox />}
+          </div>
+          <div className={classes.dropdownWapper} ref={refUser} onClick={() => setAvatarDropdown(!avatarDropdown)}>
+            <Avatar id={avatar ? id : null} alt="avatar" className={classes.avatar} size="small" />
+            {path[1] === 'u' && (
+              <div className={classes.avatarCircle} onClick={() => setAvatarDropdown(!avatarDropdown)} />
+            )}
+            {avatarDropdown && <AvatarBox setAvatarDropdown={setAvatarDropdown} />}
+          </div>
+        </div>
+      </nav>
+      {open && <Snackbar onClose={() => setOpen(false)} content="Vui lòng đảm bảo cả hai mật khẩu khớp nhau." />}
+    </>
   );
 }
