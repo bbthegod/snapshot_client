@@ -34,7 +34,11 @@ export default function AccountChangePassword(props: Props) {
         className={classes.form}
         onSubmit={e => {
           e.preventDefault();
-          onSubmit();
+          onSubmit({
+            oldPassword: password.old,
+            newPassword: password.new,
+            repeatPassword: password.repeat,
+          });
         }}
       >
         <div className={classes.rightIem}>
@@ -67,9 +71,13 @@ export default function AccountChangePassword(props: Props) {
         <div className={classes.rightIem}>
           <div className={classes.lable}></div>
           <button
-            className={password.old !== '' ? classes.buttonDisabled : classes.button}
+            className={
+              password.old === '' || password.new === '' || password.repeat === ''
+                ? classes.buttonDisabled
+                : classes.button
+            }
             type="submit"
-            disabled={password.old !== ''}
+            disabled={password.old === '' || password.new === '' || password.repeat === ''}
           >
             Đổi mật khẩu
           </button>

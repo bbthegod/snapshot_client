@@ -19,10 +19,9 @@ export default function Navigator() {
   const [avatarDropdown, setAvatarDropdown] = useState(false);
   const [notiDropdown, setNotiDropdown] = useState(false);
   const [search, setSearch] = useState('');
-  const [open, setOpen] = useState(false);
   //======================================
   const { actions } = useNavigatorSlice();
-  const { searchData, loading } = useSelector(selectNavigator);
+  const { searchData, loading, snackbar, message } = useSelector(selectNavigator);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -69,8 +68,7 @@ export default function Navigator() {
             alt="home"
             src={path[1] === '' ? homeActive : home}
             className={classes.home}
-            onClick={() => setOpen(!open)}
-            // onClick={() => history.push('/')}
+            onClick={() => history.push('/')}
           />
           <div className={classes.dropdownWapper} onClick={() => setNotiDropdown(!notiDropdown)} ref={refNoti}>
             <img alt="noti" src={notiDropdown ? notiActive : noti} className={classes.centerIcon} />
@@ -85,7 +83,7 @@ export default function Navigator() {
           </div>
         </div>
       </nav>
-      {open && <Snackbar onClose={() => setOpen(false)} content="Vui lòng đảm bảo cả hai mật khẩu khớp nhau." />}
+      {snackbar && <Snackbar onClose={() => dispatch(actions.closeSnackBar())} content={message} />}
     </>
   );
 }

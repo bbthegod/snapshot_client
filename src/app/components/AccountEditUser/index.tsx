@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import Avatar from '../Avatar';
 import GenderSelectDialog from '../GenderSelectDialog';
+import ChangeAvatarDialog from '../ChangeAvatarDialog';
 import useStyles from './styles';
 
 interface Props {
@@ -13,12 +14,16 @@ interface Props {
   original: any;
   setUser: any;
   onSubmit: any;
+  onChangeAvatar: any;
+  onRemoveAvatar: any;
 }
 
 export default function AccountEditUser(props: Props) {
-  const { user, original, setUser, onSubmit } = props;
+  const { user, original, setUser, onSubmit, onChangeAvatar, onRemoveAvatar } = props;
   const [open, setOpen] = useState(false);
+  const [openAvatar, setOpenAvatar] = useState(false);
   const classes = useStyles();
+
   function objectEquals(x, y) {
     if (x === null || x === undefined || y === null || y === undefined) {
       return x === y;
@@ -66,6 +71,7 @@ export default function AccountEditUser(props: Props) {
       })
     );
   }
+
   return (
     <>
       <div className={classes.header}>
@@ -74,7 +80,9 @@ export default function AccountEditUser(props: Props) {
         </div>
         <div className={classes.nameWrapper}>
           <div className={classes.name}>{user.username}</div>
-          <div className={classes.namedes}>Thay đổi ảnh đại diện</div>
+          <div className={classes.namedes} onClick={() => setOpenAvatar(true)}>
+            Thay đổi ảnh đại diện
+          </div>
         </div>
       </div>
       <form
@@ -180,6 +188,20 @@ export default function AccountEditUser(props: Props) {
           setOpen={() => setOpen(false)}
           value={user.gender}
           onChange={value => setUser({ ...user, ...{ gender: value } })}
+        />
+      )}
+      {openAvatar && (
+        <ChangeAvatarDialog
+          user={original}
+          setOpen={() => setOpenAvatar(false)}
+          onSubmit={file => {
+            onChangeAvatar(file);
+            setOpenAvatar(false);
+          }}
+          onRemoveAvatar={() => {
+            onRemoveAvatar();
+            setOpenAvatar(false);
+          }}
         />
       )}
     </>

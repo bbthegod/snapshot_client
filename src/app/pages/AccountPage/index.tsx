@@ -15,7 +15,7 @@ interface Props {}
 
 export function AccountPage(props: Props) {
   const classes = useStyles();
-  const [tab, setTab] = useState(2);
+  const [tab, setTab] = useState(1);
   const { actions } = useAccountPageSlice();
   const { user } = useSelector(selectAccountPage);
   const [userInfo, setUserInfo] = useState(user);
@@ -31,10 +31,10 @@ export function AccountPage(props: Props) {
       <div className={classes.wrapper}>
         <div className={classes.box}>
           <div className={classes.left}>
-            <div className={classes.leftItemActive} onClick={() => setTab(1)}>
+            <div className={tab === 1 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(1)}>
               Chỉnh sửa trang cá nhân
             </div>
-            <div className={classes.leftItem} onClick={() => setTab(2)}>
+            <div className={tab === 2 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(2)}>
               Đổi mật khẩu
             </div>
           </div>
@@ -45,9 +45,11 @@ export function AccountPage(props: Props) {
                 user={userInfo}
                 setUser={setUserInfo}
                 onSubmit={() => dispatch(actions.update(userInfo))}
+                onChangeAvatar={file => dispatch(actions.avatar({ img: file }))}
+                onRemoveAvatar={() => dispatch(actions.removeAvatar())}
               />
             )}
-            {tab === 2 && <AccountChangePassword user={user} onSubmit={() => dispatch(actions.update(userInfo))} />}
+            {tab === 2 && <AccountChangePassword user={user} onSubmit={data => dispatch(actions.password(data))} />}
           </div>
         </div>
       </div>

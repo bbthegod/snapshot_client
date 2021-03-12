@@ -4,6 +4,7 @@
  *
  */
 import React, { useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import useOutsideClick from 'utils/useOutsideClick';
 import useStyles from './styles';
 
@@ -16,6 +17,7 @@ interface Props {
 
 export default function ProfileSettingDialog(props: Props) {
   const classes = useStyles();
+  const history = useHistory();
   const ref = useRef(document.createElement('div'));
   useOutsideClick(ref, () => {
     props.setOpen();
@@ -23,7 +25,7 @@ export default function ProfileSettingDialog(props: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.wrapper} ref={ref}>
-        <div className={classes.item} onClick={() => props.changePassword()}>
+        <div className={classes.item} onClick={() => history.push('/account')}>
           <p className={classes.text}>Đổi mật khẩu</p>
         </div>
         <div className={classes.item}>

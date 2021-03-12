@@ -45,6 +45,51 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
+    password(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    passwordSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    passwordFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    avatar(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    avatarSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    avatarFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    removeAvatar(state) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    removeAvatarSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    removeAvatarFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
   },
 });
 

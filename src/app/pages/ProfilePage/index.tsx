@@ -4,6 +4,7 @@
  *
  */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ProfilePost } from 'app/components/ProfilePost';
 import { useSelector, useDispatch } from 'react-redux';
 import { HOST } from 'utils/url';
@@ -30,7 +31,8 @@ export function ProfilePage(props: Props) {
   const [openSetting, setOpenSetting] = useState(false);
   const [openMore, setOpenMore] = useState(false);
   const [openFollow, setOpenFollow] = useState(false);
-  //================================================================
+  //===============================================================
+  const history = useHistory();
   const classes = useStyles();
   const { actions } = useProfilePageSlice();
   const dispatch = useDispatch();
@@ -59,7 +61,9 @@ export function ProfilePage(props: Props) {
                   <p className={classes.infomationTopName}>{user.username}</p>
                   {userId === user._id ? (
                     <>
-                      <div className={classes.infomationTopEdit}>Chỉnh sửa trang cá nhân</div>
+                      <div className={classes.infomationTopEdit} onClick={() => history.push('/account')}>
+                        Chỉnh sửa trang cá nhân
+                      </div>
                       <img
                         src={settings}
                         alt="settings"

@@ -6,15 +6,24 @@ import { NavigatorState } from './types';
 export const initialState: NavigatorState = {
   data: [],
   searchData: [],
+  snackbar: false,
   loading: false,
   success: false,
   failures: false,
+  message: false,
 };
 
 const slice = createSlice({
   name: 'navigator',
   initialState,
   reducers: {
+    openSnackBar(state, action) {
+      state.snackbar = true;
+      state.message = action.payload;
+    },
+    closeSnackBar(state) {
+      state.snackbar = false;
+    },
     get(state) {
       state.loading = true;
       state.success = false;

@@ -5,4 +5,6 @@ export interface NavigatorState {
   loading: boolean;
   success: boolean;
   failures: boolean;
+  snackbar: boolean;
+  message: boolean;
 }
