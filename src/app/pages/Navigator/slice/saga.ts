@@ -31,7 +31,24 @@ export function* search(payload) {
   }
 }
 
+export function* getNoti() {
+  try {
+    const respone = yield call(request, {
+      method: 'GET',
+      url: `/notification/`,
+    });
+    if (respone) {
+      yield put(actions.getNotiSuccess(respone));
+    } else {
+      yield put(actions.getNotiFailures());
+    }
+  } catch (err) {
+    yield put(actions.getNotiFailures());
+  }
+}
+
 export function* navigatorSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.search.type, search);
+  yield takeLatest(actions.getNoti.type, getNoti);
 }

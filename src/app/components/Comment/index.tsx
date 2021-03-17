@@ -40,7 +40,7 @@ export default function Comment(props: Props) {
   function likeComment() {
     request({
       method: 'POST',
-      url: `/commentReplyLike`,
+      url: `/commentLike`,
       data: { commentId: data._id },
     }).then(result => {
       if (result) {

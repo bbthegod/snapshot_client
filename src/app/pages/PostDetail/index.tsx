@@ -39,9 +39,10 @@ export function PostDetail(props: Props) {
   }
   function comment() {
     if (status === 0) {
-      dispatch(actions.comment({ postId: data._id, content: content }));
+      dispatch(actions.comment({ postId: data._id, content: removeMention(content), mention: getMention(content) }));
     } else if (status === 1) {
       dispatch(actions.commentReply({ commentId, content: removeMention(content), mention: getMention(content) }));
+      setStatus(0);
     }
     setContent('');
   }
@@ -137,6 +138,7 @@ export function PostDetail(props: Props) {
                 onChange={e => {
                   setContent(e.target.value);
                 }}
+                onFocus={() => setStatus(0)}
                 value={content}
               />
               <span className={classes.post} onClick={comment}>

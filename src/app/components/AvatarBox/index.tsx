@@ -29,7 +29,13 @@ export default function AvatarBox(props: Props) {
         <img src={profile} alt="profile" className={classes.iconDropdown} />
         <p className={classes.textDropdown}>Trang cá nhân</p>
       </div>
-      <div className={classes.settingsBox}>
+      <div
+        className={classes.settingsBox}
+        onClick={() => {
+          history.push(`/account`);
+          props.setAvatarDropdown(false);
+        }}
+      >
         <img src={settings} alt="settings" className={classes.iconDropdown} />
         <p className={classes.textDropdown}>Cài đặt</p>
       </div>

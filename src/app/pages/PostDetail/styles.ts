@@ -140,6 +140,9 @@ const useStyles = makeStyles({
     width: 265,
     height: '100%',
     border: 0,
+    '&:focus': {
+      outline: 'none',
+    },
   },
   post: {
     fontSize: 14,

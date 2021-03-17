@@ -24,7 +24,7 @@ export default function CommentReply(props: Props) {
   function likeComment() {
     request({
       method: 'POST',
-      url: `/commentLike`,
+      url: `/commentReplyLike`,
       data: { commentId: data._id },
     }).then(result => {
       if (result) {
@@ -35,10 +35,10 @@ export default function CommentReply(props: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.avatarWrapper}>
-        <Avatar id={data.avatar ? data._id : null} alt="avatar" className={classes.avatar} size="small" />
+        <Avatar id={data.userId.avatar ? data.userId._id : null} alt="avatar" className={classes.avatar} size="small" />
       </div>
       <div className={classes.contentWrapper}>
-        <div className={classes.name}>{data.author}</div>
+        <div className={classes.name}>{data.userId.username}</div>
         {data.mention && <div className={classes.mention}>{data.mention}</div>}
         {data.content}
         <div className={classes.reaction}>

@@ -21,7 +21,7 @@ export default function Navigator() {
   const [search, setSearch] = useState('');
   //======================================
   const { actions } = useNavigatorSlice();
-  const { searchData, loading, snackbar, message } = useSelector(selectNavigator);
+  const { searchData, loading, snackbar, message, notifications } = useSelector(selectNavigator);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -37,6 +37,9 @@ export default function Navigator() {
       dispatch(actions.search(search));
     }
   }, [actions, dispatch, search]);
+  useEffect(() => {
+    dispatch(actions.getNoti());
+  }, [actions, dispatch, notiDropdown]);
   useOutsideClick(refNoti, () => {
     setNotiDropdown(false);
   });
@@ -72,7 +75,7 @@ export default function Navigator() {
           />
           <div className={classes.dropdownWapper} onClick={() => setNotiDropdown(!notiDropdown)} ref={refNoti}>
             <img alt="noti" src={notiDropdown ? notiActive : noti} className={classes.centerIcon} />
-            {notiDropdown && <NotificationBox />}
+            {notiDropdown && <NotificationBox notifications={notifications} />}
           </div>
           <div className={classes.dropdownWapper} ref={refUser} onClick={() => setAvatarDropdown(!avatarDropdown)}>
             <Avatar id={avatar ? id : null} alt="avatar" className={classes.avatar} size="small" />

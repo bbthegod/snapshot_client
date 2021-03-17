@@ -59,7 +59,7 @@ export function* comment(payload) {
     const respone = yield call(request, {
       method: 'POST',
       url: `/comment/${payload.payload.postId}`,
-      data: { content: payload.payload.content },
+      data: { content: payload.payload.content, mention: payload.payload.mention },
     });
     if (respone) {
       yield put(actions.commentSuccess());

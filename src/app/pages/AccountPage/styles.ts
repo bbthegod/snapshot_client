@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles({
   root: {
     display: 'flex',
@@ -12,6 +13,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     marginTop: 55,
+    marginBottom: 55,
   },
   box: {
     width: 935,
