@@ -48,6 +48,9 @@ const useStyles = makeStyles({
     border: '1px solid #dbdbdb',
     background: '#fafafa',
     textIndent: 10,
+    '&:focus': {
+      outline: 'none',
+    },
   },
   iconBox: {
     height: 55,
@@ -88,13 +91,13 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
   avatarCircle: {
-    width: 30,
-    height: 30,
+    width: 28,
+    height: 28,
     borderRadius: '50%',
-    border: '2px solid #000000',
+    border: '1px solid #000000',
     position: 'absolute',
-    top: -4,
-    right: -4,
+    top: -3,
+    right: -3,
     cursor: 'pointer',
   },
   dropdownWapper: {

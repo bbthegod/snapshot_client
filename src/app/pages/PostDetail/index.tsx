@@ -22,9 +22,10 @@ export function PostDetail(props: Props) {
   const [commentId, setCommentId] = useState();
   const [status, setStatus] = useState(0);
   const { actions } = usePostDetailSlice();
-  const { data, failures, following, comments, liked } = useSelector(selectPostDetail);
+  const { data, postFailures, following, comments, liked } = useSelector(selectPostDetail);
   const dispatch = useDispatch();
   const inputRef = useRef(document.createElement('input'));
+  const username = localStorage.getItem('username');
   useEffect(() => {
     if (props.match.params.post) {
       dispatch(actions.get(props.match.params.post));
@@ -61,7 +62,7 @@ export function PostDetail(props: Props) {
     }
     return null;
   }
-  return data && comments && !failures ? (
+  return data && comments && !postFailures ? (
     <div className={classes.root}>
       <div className={classes.paper}>
         <img src={`${HOST}/post/${data.author._id}/${data._id}/original.jpg`} alt="postimg" className={classes.image} />
@@ -74,11 +75,15 @@ export function PostDetail(props: Props) {
             />
             <div className={classes.nameWrapper}>
               <div className={classes.name}>
-                <div>{data.author.name}</div>
-                <span className={classes.dot}>•</span>
-                <div style={following ? {} : { color: '#0095F6', cursor: 'pointer' }} onClick={follow}>
-                  {following ? 'Đang theo dõi' : 'Theo dõi'}
-                </div>
+                {data.author.name}
+                {username === data.author.name && (
+                  <>
+                    <span className={classes.dot}>•</span>
+                    <div style={following ? {} : { color: '#0095F6', cursor: 'pointer' }} onClick={follow}>
+                      {following ? 'Đang theo dõi' : 'Theo dõi'}
+                    </div>
+                  </>
+                )}
               </div>
               <img src={more} alt="more" className={classes.more} />
             </div>
@@ -105,6 +110,7 @@ export function PostDetail(props: Props) {
               <Comment
                 data={item}
                 key={item._id}
+                remove={() => dispatch(actions.remove(item._id))}
                 focus={(username, id) => {
                   inputRef.current.focus();
                   setStatus(1);

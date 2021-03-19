@@ -9,23 +9,26 @@ const useStyles = makeStyles({
     width: '100%',
     display: 'flex',
   },
-  avatarWrapper: {
-    width: 48,
-    height: 32,
+  left: {
+    width: 'calc(100% - 12px)',
+    display: 'flex',
   },
   contentWrapper: {
-    width: 'calc(100% - 63px)',
+    display: 'inline-block',
+    maxWidth: 211,
   },
   avatar: {
     width: 32,
     height: 32,
     borderRadius: '50%',
+    marginRight: 18,
   },
   name: {
     fontSize: 14,
     fontWeight: 600,
     display: 'inline-block',
     marginRight: 4,
+    cursor: 'pointer',
   },
   reaction: {
     width: '100%',
@@ -53,6 +56,14 @@ const useStyles = makeStyles({
     width: 12,
     height: 12,
     cursor: 'pointer',
+  },
+  more: {
+    marginTop: 9,
+    marginRight: 9,
+    width: 12,
+    height: 12,
+    cursor: 'pointer',
+    marginLeft: 'auto',
   },
   commentReplyWrapper: {
     width: '100%',

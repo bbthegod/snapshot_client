@@ -35,6 +35,7 @@ const useStyles = makeStyles({
     width: 32,
     height: 32,
     borderRadius: '50%',
+    cursor: 'pointer',
   },
   nameWrapper: {
     width: 256,
@@ -47,6 +48,7 @@ const useStyles = makeStyles({
     fontSize: 14,
     width: 240,
     display: 'flex',
+    cursor: 'pointer',
   },
   dot: {
     margin: '0px 4px',
@@ -82,6 +84,7 @@ const useStyles = makeStyles({
     fontWeight: 600,
     display: 'inline-block',
     marginRight: 4,
+    cursor: 'pointer',
   },
   captionTime: {
     color: '#8E8E8E',
@@ -151,6 +154,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
   notFoundWrapper: {
+    marginTop: 55,
     padding: 40,
     width: '100%',
   },

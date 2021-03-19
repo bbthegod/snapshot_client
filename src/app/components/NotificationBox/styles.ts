@@ -16,6 +16,13 @@ const useStyles = makeStyles({
     },
     padding: '8px 0px',
   },
+  loading: {
+    width: '100%',
+    height: 68,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   item: {
     width: '100%',
     height: 68,

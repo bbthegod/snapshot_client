@@ -11,6 +11,8 @@ export const initialState: ProfilePageState = {
   loading: false,
   success: false,
   failures: false,
+  profileSuccess: false,
+  profileFailures: false,
 };
 
 const slice = createSlice({
@@ -19,20 +21,20 @@ const slice = createSlice({
   reducers: {
     get(state, payload) {
       state.loading = true;
-      state.success = false;
-      state.failures = false;
+      state.profileSuccess = false;
+      state.profileFailures = false;
     },
     getSuccess(state, action) {
       state.user = action.payload;
       state.following = action.payload.isUserFollowing;
       state.loading = false;
-      state.success = true;
-      state.failures = false;
+      state.profileSuccess = true;
+      state.profileFailures = false;
     },
     getFailures(state) {
       state.loading = false;
-      state.success = false;
-      state.failures = true;
+      state.profileSuccess = false;
+      state.profileFailures = true;
     },
     follow(state, payload) {
       state.loading = true;

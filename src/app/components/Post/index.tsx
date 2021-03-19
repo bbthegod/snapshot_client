@@ -12,6 +12,8 @@ import more from '../../../images/more.svg';
 import like from '../../../images/like.svg';
 import unlike from '../../../images/unlike.svg';
 import commentIcon from '../../../images/comment.svg';
+import saveIcon from '../../../images/save.svg';
+import savedIcon from '../../../images/saved.svg';
 
 interface Props {
   data: any;
@@ -28,6 +30,7 @@ export function Post(props: Props) {
   const [numberOfComments, setNumberOfComments] = useState(-1);
   const [comments, setCommets] = useState<string[]>([]);
   const [liked, setLiked] = useState(data.isUserLiked);
+  const [saved, setSaved] = useState(data.isSavedPost);
   const [trimmed, setTrimmed] = useState<string[]>([]);
   //================================================================
   const classes = useStyles();
@@ -60,7 +63,19 @@ export function Post(props: Props) {
       data: { postId: data._id },
     }).then(result => {
       if (result) {
-        setLiked(result.status);
+        setLiked(result.status === 'true');
+      }
+    });
+  }
+
+  function save() {
+    request({
+      method: 'POST',
+      url: `/savedPost/`,
+      data: { postId: data._id },
+    }).then(result => {
+      if (result) {
+        setSaved(result.status === 'true');
       }
     });
   }
@@ -107,6 +122,7 @@ export function Post(props: Props) {
         <div className={classes.likeWrapper}>
           <img src={liked ? like : unlike} alt="like" className={classes.like} onClick={likeComment} />
           <img src={commentIcon} alt="comment" className={classes.like} onClick={() => inputRef.current.focus()} />
+          <img src={saved ? savedIcon : saveIcon} alt="save" className={classes.save} onClick={() => save()} />
         </div>
         <div className={classes.likeCount}>
           {(data.likes > 0 || (data.likes === 0 && liked)) && (

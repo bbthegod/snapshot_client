@@ -4,8 +4,8 @@ import { navigatorSaga } from './saga';
 import { NavigatorState } from './types';
 
 export const initialState: NavigatorState = {
-  data: [],
-  searchData: [],
+  data: undefined,
+  searchData: undefined,
   notifications: [],
   snackbar: false,
   loading: false,
@@ -53,6 +53,7 @@ const slice = createSlice({
       state.failures = false;
     },
     searchFailures(state) {
+      state.searchData = undefined;
       state.loading = false;
       state.success = false;
       state.failures = true;

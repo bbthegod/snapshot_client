@@ -36,7 +36,7 @@ export function ProfilePage(props: Props) {
   const classes = useStyles();
   const { actions } = useProfilePageSlice();
   const dispatch = useDispatch();
-  const { user, failures, posts, saved, following } = useSelector(selectProfilePage);
+  const { user, profileFailures, posts, saved, following } = useSelector(selectProfilePage);
   //================================================================
   useEffect(() => {
     dispatch(actions.getPost(props.match.params.username));
@@ -49,7 +49,7 @@ export function ProfilePage(props: Props) {
   //================================================================
   return (
     <div>
-      {user && !failures ? (
+      {user && !profileFailures ? (
         <div className={classes.root}>
           <div className={classes.wrapper}>
             <div className={classes.infomationWrapper}>
@@ -125,8 +125,8 @@ export function ProfilePage(props: Props) {
                   <ProfilePost
                     key={index}
                     style={{ marginRight: (index + 1) % 3 !== 0 ? 28 : 0 }}
-                    image={`${HOST}/post/${item.author}/${item._id}/original.jpg`}
-                    data={item}
+                    image={`${HOST}/post/${item.postId.author}/${item.postId._id}/original.jpg`}
+                    data={item.postId}
                   />
                 ))}
             </Tab>

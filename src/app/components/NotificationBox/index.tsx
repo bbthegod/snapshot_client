@@ -7,10 +7,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import useStyles from './styles';
 import Avatar from '../Avatar';
+import Loading from '../Loading';
 import timeSince from '../../../utils/timesince';
 
 interface Props {
   notifications: any;
+  loading: any;
 }
 const CONST = {
   MENTION: {
@@ -37,6 +39,12 @@ export default function NotificationBox(props: Props) {
   const history = useHistory();
   return (
     <div className={classes.root}>
+      {props.loading && (
+        <div className={classes.loading}>
+          <Loading />
+        </div>
+      )}
+
       {props.notifications.map(item => {
         if (item.type === CONST.OTHER.FOLLOW) {
           return (

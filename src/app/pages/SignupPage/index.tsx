@@ -32,7 +32,7 @@ export function SignupPage(props: Props) {
     if (localStorage.getItem('token')) {
       history.push('/');
     }
-  }, [history]);
+  }, [history, loading]);
   //======================================
   function login() {
     history.push('/login');

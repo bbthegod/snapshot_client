@@ -5,6 +5,8 @@ export interface PostDetailState {
   following: any;
   liked: any;
   loading: boolean;
+  postSuccess: boolean;
+  postFailures: boolean;
   success: boolean;
   failures: boolean;
 }

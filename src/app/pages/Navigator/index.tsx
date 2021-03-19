@@ -65,7 +65,7 @@ export default function Navigator() {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
-        {search !== '' && searchData && !loading && <SearchBox data={searchData} setSearch={setSearch} />}
+        {search !== '' && <SearchBox loading={loading} data={searchData} setSearch={setSearch} />}
         <div className={classes.iconBox}>
           <img
             alt="home"
@@ -75,10 +75,10 @@ export default function Navigator() {
           />
           <div className={classes.dropdownWapper} onClick={() => setNotiDropdown(!notiDropdown)} ref={refNoti}>
             <img alt="noti" src={notiDropdown ? notiActive : noti} className={classes.centerIcon} />
-            {notiDropdown && <NotificationBox notifications={notifications} />}
+            {notiDropdown && <NotificationBox loading={loading} notifications={notifications} />}
           </div>
           <div className={classes.dropdownWapper} ref={refUser} onClick={() => setAvatarDropdown(!avatarDropdown)}>
-            <Avatar id={avatar ? id : null} alt="avatar" className={classes.avatar} size="small" />
+            <Avatar id={avatar === 'true' ? id : null} alt="avatar" className={classes.avatar} size="small" />
             {path[1] === 'u' && (
               <div className={classes.avatarCircle} onClick={() => setAvatarDropdown(!avatarDropdown)} />
             )}

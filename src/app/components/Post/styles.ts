@@ -59,6 +59,12 @@ const useStyles = makeStyles({
     marginRight: 16,
     cursor: 'pointer',
   },
+  save: {
+    width: 24,
+    height: 24,
+    cursor: 'pointer',
+    marginLeft: 'auto',
+  },
   likeCount: {
     padding: '0px 16px',
     margin: '0px 0px 8px',

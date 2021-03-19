@@ -7,4 +7,6 @@ export interface ProfilePageState {
   loading: boolean;
   success: boolean;
   failures: boolean;
+  profileSuccess: boolean;
+  profileFailures: boolean;
 }

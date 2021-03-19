@@ -15,6 +15,13 @@ const useStyles = makeStyles({
     padding: '8px 0px',
     cursor: 'pointer',
   },
+  loading: {
+    width: '100%',
+    height: 68,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   searchDropdown: {
     width: '100%',
     height: 60,

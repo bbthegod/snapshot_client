@@ -91,6 +91,7 @@ const useStyles = makeStyles({
   },
   postBio: { fontSize: 16, padding: 0, margin: 0, width: '100%' },
   notFoundWrapper: {
+    marginTop: 55,
     padding: 40,
     width: '100%',
   },

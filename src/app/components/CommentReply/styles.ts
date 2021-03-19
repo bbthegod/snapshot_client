@@ -6,24 +6,34 @@ const useStyles = makeStyles({
     paddingTop: 12,
     marginBottom: 10,
   },
-  avatarWrapper: {
-    width: 48,
-    height: 32,
+  left: {
+    width: 'calc(100% - 12px)',
+    display: 'flex',
   },
   contentWrapper: {
-    width: 'calc(100% - 63px)',
-    paddingRight: 20,
+    display: 'inline-block',
+    maxWidth: 170,
   },
   avatar: {
     width: 32,
     height: 32,
     borderRadius: '50%',
+    marginRight: 18,
+  },
+  more: {
+    marginTop: 9,
+    marginRight: 9,
+    width: 12,
+    height: 12,
+    cursor: 'pointer',
+    marginLeft: 'auto',
   },
   name: {
     fontSize: 14,
     fontWeight: 600,
     display: 'inline-block',
     marginRight: 4,
+    cursor: 'pointer',
   },
   reaction: {
     width: '100%',

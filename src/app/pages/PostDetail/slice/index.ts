@@ -11,6 +11,8 @@ export const initialState: PostDetailState = {
   loading: false,
   success: false,
   failures: false,
+  postSuccess: false,
+  postFailures: false,
 };
 
 const slice = createSlice({
@@ -19,21 +21,21 @@ const slice = createSlice({
   reducers: {
     get(state, payload) {
       state.loading = true;
-      state.success = false;
-      state.failures = false;
+      state.postSuccess = false;
+      state.postFailures = false;
     },
     getSuccess(state, action) {
       state.data = action.payload;
       state.following = action.payload.isUserFollowing;
       state.liked = action.payload.isUserLiked;
       state.loading = false;
-      state.success = true;
-      state.failures = false;
+      state.postSuccess = true;
+      state.postFailures = false;
     },
     getFailures(state) {
       state.loading = false;
-      state.success = false;
-      state.failures = true;
+      state.postSuccess = false;
+      state.postFailures = true;
     },
     follow(state, payload) {
       state.loading = true;
@@ -109,6 +111,21 @@ const slice = createSlice({
       state.failures = false;
     },
     commentReplyFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    remove(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    removeSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    removeFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;

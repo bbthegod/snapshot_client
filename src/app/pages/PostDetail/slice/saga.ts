@@ -106,6 +106,24 @@ export function* getComment(payload) {
     yield put(actions.getCommentFailures());
   }
 }
+
+export function* remove(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'DELETE',
+      url: `/comment/${payload.payload}`,
+    });
+    if (respone) {
+      yield put(actions.removeSuccess());
+      yield put(actions.getComment(lastGetCommentState));
+    } else {
+      yield put(actions.removeFailures());
+    }
+  } catch (err) {
+    yield put(actions.removeFailures());
+  }
+}
+
 export function* postDetailSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.getComment.type, getComment);
@@ -113,4 +131,5 @@ export function* postDetailSaga() {
   yield takeLatest(actions.like.type, like);
   yield takeLatest(actions.comment.type, comment);
   yield takeLatest(actions.commentReply.type, commentReply);
+  yield takeLatest(actions.remove.type, remove);
 }
