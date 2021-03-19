@@ -48,7 +48,13 @@ const useStyles = makeStyles({
     fontSize: 14,
     width: 240,
     display: 'flex',
+  },
+  nameText: {
+    display: 'inline-block',
     cursor: 'pointer',
+  },
+  followBox: {
+    display: 'flex',
   },
   dot: {
     margin: '0px 4px',
@@ -56,6 +62,7 @@ const useStyles = makeStyles({
   more: {
     width: 16,
     height: 16,
+    cursor: 'pointer',
   },
   commentWrapper: {
     height: 372,

@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { usePostDetailSlice } from './slice';
 import { selectPostDetail } from './slice/selectors';
 import Comment from '../../components/Comment';
+import PostDetailDialog from '../../components/PostDetailDialog';
 import nasmall from '../../../images/nasmall.jpg';
 import more from '../../../images/more.svg';
 import like from '../../../images/like.svg';
 import unlike from '../../../images/unlike.svg';
 import commentIcon from '../../../images/comment.svg';
 import useStyles from './styles';
+import copy from 'copy-to-clipboard';
 
 interface Props {
   match: any;
@@ -18,6 +20,7 @@ interface Props {
 
 export function PostDetail(props: Props) {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
   const [commentId, setCommentId] = useState();
   const [status, setStatus] = useState(0);
@@ -75,17 +78,22 @@ export function PostDetail(props: Props) {
             />
             <div className={classes.nameWrapper}>
               <div className={classes.name}>
-                {data.author.name}
-                {username === data.author.name && (
-                  <>
+                <div className={classes.nameText}>{data.author.username}</div>
+                {username !== data.author.username && (
+                  <div className={classes.followBox}>
                     <span className={classes.dot}>•</span>
-                    <div style={following ? {} : { color: '#0095F6', cursor: 'pointer' }} onClick={follow}>
+                    <div
+                      style={following ? {} : { color: '#0095F6', cursor: 'pointer' }}
+                      onClick={() => {
+                        if (!following) follow();
+                      }}
+                    >
                       {following ? 'Đang theo dõi' : 'Theo dõi'}
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
-              <img src={more} alt="more" className={classes.more} />
+              <img src={more} alt="more" className={classes.more} onClick={() => setOpen(true)} />
             </div>
           </div>
 
@@ -154,6 +162,27 @@ export function PostDetail(props: Props) {
           </div>
         </div>
       </div>
+      {open && (
+        <PostDetailDialog
+          setOpen={() => setOpen(false)}
+          report={(object, reasons) => {
+            dispatch(actions.report({ object, reasons }));
+            setOpen(false);
+            alert('Cảm ơn bạn đã báo cáo cho chúng tôi.');
+          }}
+          unfollow={() => {
+            if (following) {
+              dispatch(actions.follow(data.author._id));
+            }
+            setOpen(false);
+          }}
+          copy={() => {
+            copy(`${window.location.origin}/p/${data._id}`);
+            setOpen(false);
+            alert('Đã sao chép liên kết vào bộ nhớ tạm.');
+          }}
+        />
+      )}
     </div>
   ) : (
     <div className={classes.notFoundWrapper}>

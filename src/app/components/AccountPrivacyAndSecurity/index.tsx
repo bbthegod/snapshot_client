@@ -3,9 +3,7 @@
  * AccountNotificationPush
  *
  */
-import React, { useState } from 'react';
-// import axios from 'axios';
-// import { request } from 'utils/request';
+import React from 'react';
 import useStyles from './styles';
 
 export default function AccountNotificationPush() {
