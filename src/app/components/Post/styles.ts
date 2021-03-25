@@ -41,6 +41,7 @@ const useStyles = makeStyles({
     width: 16,
     height: 16,
     cursor: 'pointer',
+    'user-select': 'none',
   },
   imgPost: {
     width: 614,
@@ -117,19 +118,6 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
     cursor: 'pointer',
-  },
-  typeAreWapper: {
-    width: 614,
-    height: 56,
-    padding: '0px 16px',
-    borderTop: '1px solid #dbdbdb',
-    marginTop: 4,
-  },
-  input: {
-    width: '100%',
-    height: '100%',
-    border: 'none',
-    backgroundColor: '#FFFFFF',
   },
   timestampWapper: {
     marginBottom: 4,

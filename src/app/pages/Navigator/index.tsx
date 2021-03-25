@@ -28,6 +28,7 @@ export default function Navigator() {
   const refSearch = useRef(document.createElement('div'));
   const refNoti = useRef(document.createElement('div'));
   const refUser = useRef(document.createElement('div'));
+  const username = localStorage.getItem('username');
   const avatar = localStorage.getItem('avatar');
   const id = localStorage.getItem('id');
   const path = history.location.pathname.split('/');
@@ -78,7 +79,7 @@ export default function Navigator() {
             {notiDropdown && <NotificationBox loading={loading} notifications={notifications} />}
           </div>
           <div className={classes.dropdownWapper} ref={refUser} onClick={() => setAvatarDropdown(!avatarDropdown)}>
-            <Avatar id={avatar === 'true' ? id : null} alt="avatar" className={classes.avatar} size="small" />
+            <Avatar user={{ username, avatar, _id: id }} className={classes.avatar} size="small" />
             {path[1] === 'u' && (
               <div className={classes.avatarCircle} onClick={() => setAvatarDropdown(!avatarDropdown)} />
             )}

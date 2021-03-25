@@ -30,7 +30,7 @@ export function SuggestionPage(props: Props) {
           {suggests.map((item, index) => (
             <div className={classes.item}>
               <div className={classes.avatarWrapper}>
-                <Avatar id={item.avatar ? item._id : null} alt="avatar" className={classes.avatar} size="medium" />
+                <Avatar user={item.avatar} className={classes.avatar} size="medium" />
               </div>
               <div className={classes.infomationWrapper}>
                 <div className={classes.username} onClick={() => history.push(`/u/${item.username}`)}>

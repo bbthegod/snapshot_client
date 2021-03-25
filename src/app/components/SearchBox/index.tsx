@@ -35,12 +35,7 @@ export default function SearchBox(props: Props) {
               props.setSearch('');
             }}
           >
-            <Avatar
-              id={item.avatar ? item._id : null}
-              alt="avatar"
-              className={classes.searchDropdownItemImg}
-              size="medium"
-            />
+            <Avatar user={item} className={classes.searchDropdownItemImg} size="medium" />
             <div className={classes.searchDropdownItemText}>
               <p className={classes.searchDropdownUserName}>{item.username}</p>
               <p className={classes.searchDropdownName}>{item.name}</p>

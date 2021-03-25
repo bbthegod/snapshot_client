@@ -1,6 +1,7 @@
 /* --- STATE --- */
 export interface PostDetailState {
   data: any;
+  count: any;
   comments: any;
   following: any;
   liked: any;

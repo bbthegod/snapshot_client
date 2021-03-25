@@ -54,7 +54,7 @@ export function ProfilePage(props: Props) {
           <div className={classes.wrapper}>
             <div className={classes.infomationWrapper}>
               <div className={classes.avatarBox}>
-                <Avatar id={user.avatar ? user._id : null} alt="avatar" className={classes.avatar} size="medium" />
+                <Avatar user={user} className={classes.avatar} size="medium" />
               </div>
               <div className={classes.infomationBox}>
                 <div className={classes.infomationTop}>

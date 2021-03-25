@@ -15,7 +15,7 @@ export function UserSuggestion(props: Props) {
   const { data, content, follow } = props;
   return (
     <div className={classes.root}>
-      <Avatar id={data.avatar ? data._id : null} alt="avatar" className={classes.image} size="small" />
+      <Avatar user={data.avatar} className={classes.image} size="small" />
       <div className={classes.main}>
         <span className={classes.name} onClick={() => history.push(`/u/${data.username}`)}>
           {data.username}

@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -11,6 +12,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    animation: '$zoomIn .1s ease-out',
   },
   wrapper: {
     borderRadius: 12,
@@ -40,6 +42,19 @@ const useStyles = makeStyles({
     fontSize: 14,
     color: '#ed4956',
     fontWeight: 700,
+  },
+
+  '@keyframes zoomIn': {
+    '0%': {
+      opacity: 0,
+      '-webkit-transform': 'scale(1.2)',
+      transform: 'scale(1.2)',
+    },
+    '100%': {
+      opacity: 1,
+      '-webkit-transform': 'scale(1)',
+      transform: 'scale(1)',
+    },
   },
 });
 export default useStyles;

@@ -41,7 +41,7 @@ export default function CommentReply(props: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.left} onMouseEnter={() => setHoverMore(true)} onMouseLeave={() => setHoverMore(false)}>
-        <Avatar id={data.userId.avatar ? data.userId._id : null} alt="avatar" className={classes.avatar} size="small" />
+        <Avatar user={data.userId} className={classes.avatar} size="small" />
         <div className={classes.contentWrapper}>
           <div className={classes.name}>{data.userId.username}</div>
           {data.mention && <div className={classes.mention}>{data.mention}</div>}

@@ -167,5 +167,17 @@ const useStyles = makeStyles({
   },
   notFound1: { fontSize: 22, color: '#262626', textAlign: 'center', fontWeight: 600 },
   notFound2: { fontSize: 16, color: '#262626', textAlign: 'center', fontWeight: 400 },
+  moreWrapper: {
+    width: '100%',
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  moreComment: {
+    width: 24,
+    height: 24,
+    cursor: 'pointer',
+  },
 });
 export default useStyles;

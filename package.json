@@ -33,6 +33,7 @@
     "@types/testing-library__jest-dom": "5.9.2",
     "@types/webpack": "4.41.22",
     "@types/webpack-env": "1.15.2",
+    "autosize": "4.0.2",
     "axios": "0.21.1",
     "chalk": "4.1.0",
     "copy-to-clipboard": "3.3.1",

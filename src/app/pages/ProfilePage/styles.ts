@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
   },
-  avatar: { width: 150, height: 150, borderRadius: '50%' },
+  avatar: { width: 150, height: 150, borderRadius: '50%', cursor: 'pointer' },
   infomationBox: {
     width: 652,
     height: 200,
@@ -39,6 +39,7 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
     color: '#262626',
+    cursor: 'text',
   },
   infomationTopEdit: {
     border: '1px solid #dbdbdb',

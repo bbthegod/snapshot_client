@@ -5,6 +5,7 @@ import { PostDetailState } from './types';
 
 export const initialState: PostDetailState = {
   data: undefined,
+  count: 0,
   comments: undefined,
   following: undefined,
   liked: undefined,
@@ -60,6 +61,7 @@ const slice = createSlice({
     },
     getCommentSuccess(state, action) {
       state.comments = action.payload.data;
+      state.count = action.payload.count;
       state.loading = false;
       state.success = true;
       state.failures = false;

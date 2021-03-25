@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 export const GlobalStyle = createGlobalStyle`
   html,
   body {
@@ -13,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto';
     min-height: '100%';
   }
+
   #root {
     min-height: 100%;
     min-width: 100%;

@@ -76,7 +76,7 @@ export default function AccountEditUser(props: Props) {
     <>
       <div className={classes.header}>
         <div className={classes.avatarWrapper}>
-          <Avatar id={user.avatar ? user._id : null} alt="avatar" className={classes.avatar} size="small" />
+          <Avatar user={user} className={classes.avatar} size="small" />
         </div>
         <div className={classes.nameWrapper}>
           <div className={classes.name}>{user.username}</div>

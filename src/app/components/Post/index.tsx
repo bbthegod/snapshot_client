@@ -8,6 +8,7 @@ import useStyles from './styles';
 import Avatar from '../Avatar';
 import MiniComment from '../MiniComment';
 import PostDialog from '../PostDialog';
+import PostInput from '../PostInput';
 import more from '../../../images/more.svg';
 import like from '../../../images/like.svg';
 import unlike from '../../../images/unlike.svg';
@@ -35,8 +36,9 @@ export function Post(props: Props) {
   //================================================================
   const classes = useStyles();
   const history = useHistory();
-  const inputRef = useRef(document.createElement('input'));
+  const inputRef = useRef(document.createElement('textarea'));
   //================================================================
+
   useEffect(() => {
     const array: string[] = data.caption.split('\n');
     setTrimmed(array);
@@ -81,34 +83,31 @@ export function Post(props: Props) {
   }
 
   function comment() {
-    setContent('');
-    request({
-      method: 'POST',
-      url: `/comment/${data._id}`,
-      data: { content: content },
-    }).then(result => {
+    if (content !== '') {
       request({
-        method: 'GET',
-        url: `/comment/${data._id}?limit=3`,
+        method: 'POST',
+        url: `/comment/${data._id}`,
+        data: { content: content },
       }).then(result => {
-        if (result) {
-          setCommets(result.data);
-          setNumberOfComments(result.count);
-        }
+        request({
+          method: 'GET',
+          url: `/comment/${data._id}?limit=3`,
+        }).then(result => {
+          if (result) {
+            setCommets(result.data);
+            setNumberOfComments(result.count);
+          }
+        });
       });
-    });
+      setContent('');
+    }
   }
   //================================================================
   return (
     <>
       <div className={classes.root}>
         <div className={classes.header}>
-          <Avatar
-            id={data.author.avatar ? data.author._id : null}
-            alt="avatar"
-            className={classes.avatar}
-            size="small"
-          />
+          <Avatar user={data.author} className={classes.avatar} size="small" />
           <div className={classes.nameWrapper}>
             <div className={classes.nameBox}>
               <p className={classes.name} onClick={() => history.push(`/u/${data.author.username}`)}>
@@ -160,16 +159,13 @@ export function Post(props: Props) {
             comment();
           }}
         >
-          <div className={classes.typeAreWapper}>
-            <input
-              type="text"
-              className={classes.input}
-              placeholder="Thêm bình luận"
-              ref={inputRef}
-              onChange={e => setContent(e.target.value)}
-              value={content}
-            />
-          </div>
+          <PostInput
+            inputRef={inputRef}
+            value={content}
+            onChange={e => setContent(e)}
+            disabled={content === ''}
+            onSubmit={() => comment()}
+          />
         </form>
       </div>
       {open && (

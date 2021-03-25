@@ -11,6 +11,7 @@ import more from '../../../images/more.svg';
 import like from '../../../images/like.svg';
 import unlike from '../../../images/unlike.svg';
 import commentIcon from '../../../images/comment.svg';
+import addIcon from '../../../images/add.svg';
 import useStyles from './styles';
 import copy from 'copy-to-clipboard';
 
@@ -24,17 +25,22 @@ export function PostDetail(props: Props) {
   const [content, setContent] = useState('');
   const [commentId, setCommentId] = useState();
   const [status, setStatus] = useState(0);
+  const [limit, setLimit] = useState(12);
   const { actions } = usePostDetailSlice();
-  const { data, postFailures, following, comments, liked } = useSelector(selectPostDetail);
+  const { data, postFailures, following, comments, liked, count } = useSelector(selectPostDetail);
   const dispatch = useDispatch();
   const inputRef = useRef(document.createElement('input'));
   const username = localStorage.getItem('username');
   useEffect(() => {
     if (props.match.params.post) {
       dispatch(actions.get(props.match.params.post));
-      dispatch(actions.getComment({ id: props.match.params.post, query: { skip: 0, limit: 10 } }));
     }
   }, [actions, dispatch, props.match.params.post]);
+  useEffect(() => {
+    if (props.match.params.post) {
+      dispatch(actions.getComment({ id: props.match.params.post, query: { skip: 0, limit } }));
+    }
+  }, [actions, dispatch, props.match.params.post, limit]);
   function follow() {
     dispatch(actions.follow(data.author._id));
   }
@@ -127,6 +133,11 @@ export function PostDetail(props: Props) {
                 }}
               />
             ))}
+            {count > comments.length && (
+              <div className={classes.moreWrapper}>
+                <img src={addIcon} alt="add" className={classes.moreComment} onClick={() => setLimit(limit + 12)} />
+              </div>
+            )}
           </div>
           <div style={{ height: 110 }}>
             <div className={classes.reaction}>

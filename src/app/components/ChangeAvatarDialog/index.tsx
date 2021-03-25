@@ -31,7 +31,7 @@ export default function ChangeAvatarDialog(props: Props) {
     <div className={classes.root}>
       <div className={classes.wrapper} ref={ref}>
         <div className={classes.header}>
-          <Avatar id={user.avatar ? user._id : null} alt="avatar" className={classes.avatar} size="medium" />
+          <Avatar user={user} className={classes.avatar} size="medium" />
           <p className={classes.headerText}>{user.username}</p>
         </div>
         <label className={classes.input} htmlFor="input">

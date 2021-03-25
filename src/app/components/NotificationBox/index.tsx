@@ -54,12 +54,7 @@ export default function NotificationBox(props: Props) {
                 history.push(`/p/${item.postId}`);
               }}
             >
-              <Avatar
-                id={item.fromUserId.avatar ? item.fromUserId._id : null}
-                alt="avatar"
-                className={classes.avatar}
-                size="small"
-              />
+              <Avatar user={item.fromUserId} className={classes.avatar} size="small" />
               <div className={classes.text}>
                 <span className={classes.link}>{item.fromUserId.username}</span>
                 đã bắt đầu theo dõi bạn.
@@ -75,12 +70,7 @@ export default function NotificationBox(props: Props) {
                 history.push(`/p/${item.postId}`);
               }}
             >
-              <Avatar
-                id={item.fromUserId.avatar ? item.fromUserId._id : null}
-                alt="avatar"
-                className={classes.avatar}
-                size="small"
-              />
+              <Avatar user={item.fromUserId} className={classes.avatar} size="small" />
               <div className={classes.text}>
                 <span className={classes.link}>{item.fromUserId.username}</span>
                 đã nhắc đến bạn trong một bình luận.
@@ -96,12 +86,7 @@ export default function NotificationBox(props: Props) {
                 history.push(`/p/${item.postId}`);
               }}
             >
-              <Avatar
-                id={item.fromUserId.avatar ? item.fromUserId._id : null}
-                alt="avatar"
-                className={classes.avatar}
-                size="small"
-              />
+              <Avatar user={item.fromUserId} className={classes.avatar} size="small" />
               <div className={classes.text}>
                 <span className={classes.link}>{item.fromUserId.username}</span>
                 thích bài viết của bạn.
@@ -117,12 +102,7 @@ export default function NotificationBox(props: Props) {
                 history.push(`/p/${item.postId}`);
               }}
             >
-              <Avatar
-                id={item.fromUserId.avatar ? item.fromUserId._id : null}
-                alt="avatar"
-                className={classes.avatar}
-                size="small"
-              />
+              <Avatar user={item.fromUserId} className={classes.avatar} size="small" />
               <div className={classes.text}>
                 <span className={classes.link}>{item.fromUserId.username}</span>
                 thích bình luận của bạn.
@@ -138,12 +118,7 @@ export default function NotificationBox(props: Props) {
                 history.push(`/p/${item.postId}`);
               }}
             >
-              <Avatar
-                id={item.fromUserId.avatar ? item.fromUserId._id : null}
-                alt="avatar"
-                className={classes.avatar}
-                size="small"
-              />
+              <Avatar user={item.fromUserId} className={classes.avatar} size="small" />
               <div className={classes.text}>
                 <span className={classes.link}>{item.fromUserId.username}</span>
                 đã bình luận về bài viết của bạn.
@@ -159,12 +134,7 @@ export default function NotificationBox(props: Props) {
                 history.push(`/p/${item.postId}`);
               }}
             >
-              <Avatar
-                id={item.fromUserId.avatar ? item.fromUserId._id : null}
-                alt="avatar"
-                className={classes.avatar}
-                size="small"
-              />
+              <Avatar user={item.fromUserId} className={classes.avatar} size="small" />
               <div className={classes.text}>
                 <span className={classes.link}>{item.fromUserId.username}</span>
                 đã trả lời bình luận của bạn.
