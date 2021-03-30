@@ -8,8 +8,8 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFeedPageSlice } from './slice';
 import { selectFeedPage } from './slice/selectors';
-import { Post } from 'app/components/Post';
-import { UserSuggestion } from 'app/components/UserSuggestion';
+import { Post } from 'app/pages/FeedPage/components/Post';
+import { UserSuggestion } from 'app/pages/FeedPage/components/UserSuggestion';
 import useStyles from './styles';
 
 interface Props {}
@@ -22,7 +22,7 @@ export function FeedPage(props: Props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.get());
-    dispatch(actions.getSuggestion());
+    dispatch(actions.getSuggestion({ query: { skip: 0, limit: 10 } }));
   }, [actions, dispatch]);
   return (
     <div className={classes.root}>

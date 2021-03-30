@@ -10,11 +10,10 @@ const useStyles = makeStyles({
     padding: '30px 20px 0px 20px',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 100,
+    marginTop: 50,
   },
   box: {
     width: 600,
-    height: 1000,
     background: '#FFFFFF',
     padding: 8,
   },

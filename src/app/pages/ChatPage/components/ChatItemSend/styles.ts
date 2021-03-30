@@ -17,7 +17,6 @@ const useStyles = makeStyles({
     padding: 16,
     borderRadius: 22,
     maxWidth: 236,
-    minHeight: 56,
     display: 'inline-block',
     background: '#efefef',
   },

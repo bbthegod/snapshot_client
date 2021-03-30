@@ -22,6 +22,22 @@ function jsonToFormData(data) {
   return formData;
 }
 
+async function check() {
+  try {
+    const response = await request({
+      method: 'GET',
+      url: `/auth/check`,
+    });
+    if (response) {
+      localStorage.setItem('username', response.username);
+      localStorage.setItem('id', response._id);
+      localStorage.setItem('avatar', response.avatar);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export function* get() {
   try {
     const response = yield call(request, {
@@ -48,6 +64,7 @@ export function* update(payload) {
     if (response) {
       yield put(actions.updateSuccess());
       yield put(navigatorActions.openSnackBar('Đã lưu trang cá nhân'));
+      check();
     } else {
       yield put(actions.updateFailures());
     }
@@ -67,6 +84,7 @@ export function* avatar(payload) {
       yield put(actions.avatarSuccess());
       yield put(navigatorActions.openSnackBar('Đã tải lên ảnh đại diện'));
       yield put(actions.get());
+      check();
     } else {
       yield put(actions.avatarFailures());
     }
@@ -85,6 +103,7 @@ export function* removeAvatar() {
       yield put(actions.removeAvatarSuccess());
       yield put(navigatorActions.openSnackBar('Đã gỡ ảnh đại diện'));
       yield put(actions.get());
+      check();
     } else {
       yield put(actions.removeAvatarFailures());
     }

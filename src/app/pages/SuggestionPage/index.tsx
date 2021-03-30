@@ -22,7 +22,6 @@ export function SuggestionPage(props: Props) {
   useEffect(() => {
     dispatch(actions.get());
   }, [actions, dispatch]);
-  console.log(suggests);
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>

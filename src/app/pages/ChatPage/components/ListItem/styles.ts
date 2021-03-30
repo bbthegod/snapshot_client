@@ -7,6 +7,10 @@ const useStyles = makeStyles({
     display: 'flex',
     background: '#ffffff',
     cursor: 'pointer',
+    position: 'relative',
+    '&:hover': {
+      background: '#efefef',
+    },
   },
   rootActive: {
     width: '100%',
@@ -14,12 +18,23 @@ const useStyles = makeStyles({
     padding: '8px 20px',
     display: 'flex',
     background: '#efefef',
+    position: 'relative',
   },
   avatar: {
     width: 56,
     height: 56,
     borderRadius: '50%',
     marginRight: 12,
+  },
+  active: {
+    position: 'absolute',
+    width: 12,
+    height: 12,
+    borderRadius: '50%',
+    background: '#64DD17',
+    top: 50,
+    left: 62,
+    border: '2px solid #FFFFFF',
   },
   nameWrapper: {
     width: 'auto',

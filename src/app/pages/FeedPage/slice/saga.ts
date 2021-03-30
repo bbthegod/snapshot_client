@@ -1,6 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { request } from 'utils/request';
+import serialize from 'utils/serialize';
 import { feedPageActions as actions } from '.';
+let lastQuery = {};
 
 export function* get(payload) {
   try {
@@ -20,9 +22,10 @@ export function* get(payload) {
 
 export function* getSuggestion(payload) {
   try {
+    lastQuery = payload;
     const respone = yield call(request, {
       method: 'GET',
-      url: `/follow`,
+      url: `/follow?${serialize(payload.payload.query)}`,
     });
     if (respone) {
       yield put(actions.getSuggestionSuccess(respone));
@@ -43,7 +46,7 @@ export function* follow(payload) {
     });
     if (respone) {
       yield put(actions.followSuccess(respone));
-      yield put(actions.getSuggestion());
+      yield put(actions.getSuggestion(lastQuery));
     } else {
       yield put(actions.followFailures());
     }

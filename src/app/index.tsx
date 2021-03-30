@@ -24,7 +24,6 @@ import PrivateRoutes from './components/PrivateRoutes';
 import Navigator from './pages/Navigator';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import ChatPage from './pages/ChatPage';
-import StoryPage from './pages/StoryPage';
 
 export function App() {
   return (
@@ -36,12 +35,11 @@ export function App() {
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
-        <Route path="/story" component={StoryPage} />
         <PrivateRoutes exact path="/" component={FeedPage} layout={Navigator} />
         <PrivateRoutes path="/p/:post" component={PostDetail} layout={Navigator} />
         <PrivateRoutes path="/u/:username" component={ProfilePage} layout={Navigator} />
         <PrivateRoutes path="/suggest" component={SuggestionPage} layout={Navigator} />
-        <PrivateRoutes path="/account" component={AccountPage} layout={Navigator} />
+        <PrivateRoutes path="/account/:index" component={AccountPage} layout={Navigator} />
         <PrivateRoutes path="/direct" component={ChatPage} layout={Navigator} />
         <Route component={NotFoundPage} />
       </Switch>

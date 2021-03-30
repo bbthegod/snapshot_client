@@ -74,6 +74,21 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
+    post(state, action) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    postSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    postFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
   },
 });
 

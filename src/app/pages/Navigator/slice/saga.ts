@@ -2,19 +2,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { request } from 'utils/request';
 import { navigatorActions as actions } from '.';
 
-export function* get() {
-  try {
-    const respone = yield call(request, { url: 'https://jsonplaceholder.typicode.com/posts', method: 'GET' });
-    if (respone) {
-      yield put(actions.getSuccess(respone));
-    } else {
-      yield put(actions.getFailures());
-    }
-  } catch (err) {
-    yield put(actions.getFailures());
-  }
-}
-
 export function* search(payload) {
   try {
     const respone = yield call(request, {
@@ -47,8 +34,28 @@ export function* getNoti() {
   }
 }
 
+export function* post(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'POST',
+      url: `/post/`,
+      data: {
+        img: payload.payload.img,
+        caption: payload.payload.caption,
+      },
+    });
+    if (respone) {
+      yield put(actions.postSuccess());
+    } else {
+      yield put(actions.postFailures());
+    }
+  } catch (err) {
+    yield put(actions.postFailures());
+  }
+}
+
 export function* navigatorSaga() {
-  yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.search.type, search);
   yield takeLatest(actions.getNoti.type, getNoti);
+  yield takeLatest(actions.post.type, post);
 }

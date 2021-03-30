@@ -5,17 +5,17 @@
  */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ProfilePost } from 'app/components/ProfilePost';
+import { ProfilePost } from 'app/pages/ProfilePage/components/ProfilePost';
 import { useSelector, useDispatch } from 'react-redux';
 import { HOST } from 'utils/url';
 import { useProfilePageSlice } from './slice';
 import { selectProfilePage } from './slice/selectors';
 import useStyles from './styles';
 import Avatar from '../../components/Avatar';
-import ProfileMoreDialog from '../../components/ProfileMoreDialog';
-import ProfileSettingDialog from '../../components/ProfileSettingDialog';
-import FollowDialog from '../../components/FollowDialog';
-import Tab from '../../components/Tab';
+import ProfileMoreDialog from './components/ProfileMoreDialog';
+import ProfileSettingDialog from './components/ProfileSettingDialog';
+import FollowDialog from './components/FollowDialog';
+import Tab from './components/Tab';
 import settings from '../../../images/settings.svg';
 import more from '../../../images/more.svg';
 import userIcon from '../../../images/user.svg';
@@ -61,7 +61,7 @@ export function ProfilePage(props: Props) {
                   <p className={classes.infomationTopName}>{user.username}</p>
                   {userId === user._id ? (
                     <>
-                      <div className={classes.infomationTopEdit} onClick={() => history.push('/account')}>
+                      <div className={classes.infomationTopEdit} onClick={() => history.push('/account/edit')}>
                         Chỉnh sửa trang cá nhân
                       </div>
                       <img
@@ -143,9 +143,7 @@ export function ProfilePage(props: Props) {
           setOpen={() => setOpenSetting(false)}
           changePassword={() => {}}
           report={() => {}}
-          logout={() => {
-            console.log('adasdas');
-          }}
+          logout={() => {}}
         />
       )}
       {openMore && (

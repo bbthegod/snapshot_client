@@ -17,7 +17,6 @@ const useStyles = makeStyles({
     borderRadius: 22,
     border: '1px solid #dbdbdb',
     maxWidth: 236,
-    minHeight: 56,
     display: 'inline-block',
   },
 });

@@ -4,21 +4,28 @@ import useOutsideClick from 'utils/useOutsideClick';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigatorSlice } from './slice';
 import { selectNavigator } from './slice/selectors';
-import useStyles from './styles';
-import NotificationBox from '../../components/NotificationBox';
-import SearchBox from '../../components/SearchBox';
-import AvatarBox from '../../components/AvatarBox';
+import io from 'socket.io-client';
+import { SOCKET_URL } from 'utils/url';
+import NotificationBox from './components/NotificationBox';
+import SearchBox from './components/SearchBox';
+import AvatarBox from './components/AvatarBox';
 import Snackbar from '../../components/Snackbar';
 import Avatar from '../../components/Avatar';
+import PostDialog from './components/PostDialog';
 import home from '../../../images/home.svg';
 import homeActive from '../../../images/home-active.svg';
 import noti from '../../../images/noti.svg';
+import post from '../../../images/post.svg';
+import direct from '../../../images/direct.svg';
 import notiActive from '../../../images/noti-active.svg';
+import useStyles from './styles';
 
 export default function Navigator() {
   const [avatarDropdown, setAvatarDropdown] = useState(false);
   const [notiDropdown, setNotiDropdown] = useState(false);
   const [search, setSearch] = useState('');
+  const [ramdomKey, setRamdomKey] = useState('0');
+  const [file, setFile] = useState();
   //======================================
   const { actions } = useNavigatorSlice();
   const { searchData, loading, snackbar, message, notifications } = useSelector(selectNavigator);
@@ -32,12 +39,30 @@ export default function Navigator() {
   const avatar = localStorage.getItem('avatar');
   const id = localStorage.getItem('id');
   const path = history.location.pathname.split('/');
+  const socket = io(SOCKET_URL, {
+    // withCredentials: true,
+    // extraHeaders: {
+    //   'my-custom-header': 'abcd',
+    // },
+  });
   //======================================
   useEffect(() => {
     if (search !== '') {
       dispatch(actions.search(search));
     }
   }, [actions, dispatch, search]);
+
+  useEffect(() => {
+    socket.emit('login', {
+      command: 1000,
+      token: localStorage.getItem('token'),
+    });
+    socket.emit('check', { token: localStorage.getItem('token') });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     dispatch(actions.getNoti());
   }, [actions, dispatch, notiDropdown]);
@@ -50,6 +75,10 @@ export default function Navigator() {
   useOutsideClick(refSearch, () => {
     setSearch('');
   });
+
+  function upload(event) {
+    setFile(event.target.files[0]);
+  }
   return (
     <>
       <nav className={classes.root}>
@@ -74,12 +103,25 @@ export default function Navigator() {
             className={classes.home}
             onClick={() => history.push('/')}
           />
+          <label htmlFor="inputPost">
+            <img alt="post" src={post} className={classes.centerIcon} onClick={() => {}} />
+          </label>
+          <input
+            id="inputPost"
+            type="file"
+            style={{ display: 'none' }}
+            onChange={event => upload(event)}
+            accept="image/png, image/jpeg, image/jpg"
+            multiple={false}
+            key={ramdomKey}
+          />
+          <img alt="direct" src={direct} className={classes.centerIcon} onClick={() => history.push('/direct')} />
           <div className={classes.dropdownWapper} onClick={() => setNotiDropdown(!notiDropdown)} ref={refNoti}>
             <img alt="noti" src={notiDropdown ? notiActive : noti} className={classes.centerIcon} />
             {notiDropdown && <NotificationBox loading={loading} notifications={notifications} />}
           </div>
           <div className={classes.dropdownWapper} ref={refUser} onClick={() => setAvatarDropdown(!avatarDropdown)}>
-            <Avatar user={{ username, avatar, _id: id }} className={classes.avatar} size="small" />
+            <Avatar user={{ username, avatar: avatar === 'true', _id: id }} className={classes.avatar} size="small" />
             {path[1] === 'u' && (
               <div className={classes.avatarCircle} onClick={() => setAvatarDropdown(!avatarDropdown)} />
             )}
@@ -88,6 +130,16 @@ export default function Navigator() {
         </div>
       </nav>
       {snackbar && <Snackbar onClose={() => dispatch(actions.closeSnackBar())} content={message} />}
+      {file && (
+        <PostDialog
+          onClose={() => {
+            setFile(undefined);
+            setRamdomKey(Math.random().toString(36));
+          }}
+          file={file}
+          onPost={data => dispatch(actions.post(data))}
+        />
+      )}
     </>
   );
 }

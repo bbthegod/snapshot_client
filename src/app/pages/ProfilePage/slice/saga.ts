@@ -52,7 +52,6 @@ export function* getPost(payload) {
 }
 
 export function* getSaved(payload) {
-  console.log(payload);
   try {
     const respone = yield call(request, {
       method: 'GET',

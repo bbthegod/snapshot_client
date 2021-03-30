@@ -58,6 +58,8 @@ const useStyles = makeStyles({
   },
   right: {
     width: 583,
+    minHeight: 634,
+    background: '#FFFFFF',
   },
   rightHeader: {
     width: '100%',
@@ -107,15 +109,12 @@ const useStyles = makeStyles({
   },
   contentWrapper: {
     width: '100%',
-    minHeight: 490,
+    height: 490,
+    padding: '20px 20px 0px',
     overflowY: 'scroll',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
-  },
-  content: {
-    width: '100%',
-    padding: '20px 20px 0px',
   },
   chatWrapper: {
     width: '100%',

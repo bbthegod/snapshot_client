@@ -4,28 +4,34 @@
  *
  */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAccountPageSlice } from './slice';
 import { selectAccountPage } from './slice/selectors';
-import AccountEditUser from '../../components/AccountEditUser';
-import AccountChangePassword from '../../components/AccountChangePassword';
-import AccountEmailAndSms from '../../components/AccountEmailAndSms';
-import AccountNotificationPush from '../../components/AccountNotificationPush';
-import AccountPrivacyAndSecurity from '../../components/AccountPrivacyAndSecurity';
+import AccountEditUser from './components/AccountEditUser';
+import AccountChangePassword from './components/AccountChangePassword';
 import useStyles from './styles';
 
-interface Props {}
+interface Props {
+  match: any;
+}
 
 export function AccountPage(props: Props) {
   const classes = useStyles();
-  const [tab, setTab] = useState(4);
+  const [tab, setTab] = useState(1);
   const { actions } = useAccountPageSlice();
   const { user } = useSelector(selectAccountPage);
   const [userInfo, setUserInfo] = useState(user);
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     dispatch(actions.get());
-  }, [actions, dispatch]);
+    if (props.match.params.index === 'edit') {
+      setTab(1);
+    } else if (props.match.params.index === 'password') {
+      setTab(2);
+    }
+  }, [actions, dispatch, props.match.params.index]);
   useEffect(() => {
     setUserInfo(user);
   }, [user]);
@@ -34,20 +40,17 @@ export function AccountPage(props: Props) {
       <div className={classes.wrapper}>
         <div className={classes.box}>
           <div className={classes.left}>
-            <div className={tab === 1 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(1)}>
+            <div
+              className={tab === 1 ? classes.leftItemActive : classes.leftItem}
+              onClick={() => history.push('/account/edit')}
+            >
               Chỉnh sửa trang cá nhân
             </div>
-            <div className={tab === 2 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(2)}>
+            <div
+              className={tab === 2 ? classes.leftItemActive : classes.leftItem}
+              onClick={() => history.push('/account/password')}
+            >
               Đổi mật khẩu
-            </div>
-            <div className={tab === 3 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(3)}>
-              Email và SMS
-            </div>
-            <div className={tab === 4 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(4)}>
-              Thông báo đẩy
-            </div>
-            <div className={tab === 5 ? classes.leftItemActive : classes.leftItem} onClick={() => setTab(5)}>
-              Bảo mật và quyền riêng tư
             </div>
           </div>
           <div className={classes.right}>
@@ -62,9 +65,6 @@ export function AccountPage(props: Props) {
               />
             )}
             {tab === 2 && <AccountChangePassword user={user} onSubmit={data => dispatch(actions.password(data))} />}
-            {tab === 3 && <AccountEmailAndSms />}
-            {tab === 4 && <AccountNotificationPush />}
-            {tab === 5 && <AccountPrivacyAndSecurity />}
           </div>
         </div>
       </div>

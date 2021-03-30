@@ -46,7 +46,7 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
-    getSuggestion(state) {
+    getSuggestion(state, action) {
       state.loading = true;
       state.success = false;
       state.failures = false;
