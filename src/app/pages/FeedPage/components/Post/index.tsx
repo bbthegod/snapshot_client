@@ -58,15 +58,13 @@ export function Post(props: Props) {
     }
   }, [data._id, data.comments]);
   //================================================================
-  function likeComment() {
+  function likePost() {
     request({
       method: 'POST',
       url: `/like`,
       data: { postId: data._id },
     }).then(result => {
-      if (result) {
-        setLiked(result.status === 'true');
-      }
+      if (result) setLiked(result.status);
     });
   }
 
@@ -76,9 +74,7 @@ export function Post(props: Props) {
       url: `/savedPost/`,
       data: { postId: data._id },
     }).then(result => {
-      if (result) {
-        setSaved(result.status === 'true');
-      }
+      if (result) setSaved(result.status);
     });
   }
 
@@ -119,7 +115,7 @@ export function Post(props: Props) {
         </div>
         <img src={`${HOST}/post/${data.author._id}/${data._id}/original.jpg`} alt="post" className={classes.imgPost} />
         <div className={classes.likeWrapper}>
-          <img src={liked ? like : unlike} alt="like" className={classes.like} onClick={likeComment} />
+          <img src={liked ? like : unlike} alt="like" className={classes.like} onClick={() => likePost()} />
           <img src={commentIcon} alt="comment" className={classes.like} onClick={() => inputRef.current.focus()} />
           <img src={saved ? savedIcon : saveIcon} alt="save" className={classes.save} onClick={() => save()} />
         </div>

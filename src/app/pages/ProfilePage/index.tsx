@@ -150,7 +150,7 @@ export function ProfilePage(props: Props) {
         <ProfileMoreDialog
           block={() => {}}
           report={(object, reasons) => {
-            dispatch(actions.report({ object, reasons }));
+            dispatch(actions.report({ object, reasons, id: user._id }));
             setOpenMore(false);
             alert('Cảm ơn bạn đã báo cáo cho chúng tôi.');
           }}

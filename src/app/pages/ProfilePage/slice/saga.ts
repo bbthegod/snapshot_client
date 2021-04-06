@@ -72,7 +72,7 @@ export function* report(payload) {
     const respone = yield call(request, {
       method: 'POST',
       url: `/report/`,
-      data: { object: payload.payload.object, reasons: payload.payload.reasons },
+      data: { object: payload.payload.object, reasons: payload.payload.reasons, id: payload.payload.id },
     });
     if (respone) {
       yield put(actions.reportSuccess());

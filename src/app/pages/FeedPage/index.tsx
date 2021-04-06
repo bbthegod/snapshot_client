@@ -32,7 +32,7 @@ export function FeedPage(props: Props) {
             <Post
               key={item._id}
               data={item}
-              report={(object, reasons) => dispatch(actions.report({ object, reasons }))}
+              report={(object, reasons) => dispatch(actions.report({ object, reasons, id: item._id }))}
               follow={() => dispatch(actions.follow(item.author._id))}
             />
           ))}

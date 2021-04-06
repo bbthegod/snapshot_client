@@ -177,7 +177,7 @@ export function PostDetail(props: Props) {
         <PostDetailDialog
           setOpen={() => setOpen(false)}
           report={(object, reasons) => {
-            dispatch(actions.report({ object, reasons }));
+            dispatch(actions.report({ object, reasons, id: data._id }));
             setOpen(false);
             alert('Cảm ơn bạn đã báo cáo cho chúng tôi.');
           }}
