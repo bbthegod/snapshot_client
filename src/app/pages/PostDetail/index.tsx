@@ -125,6 +125,7 @@ export function PostDetail(props: Props) {
                 data={item}
                 key={item._id}
                 remove={() => dispatch(actions.remove(item._id))}
+                editComment={content => dispatch(actions.editComment({ content, id: item._id }))}
                 focus={(username, id) => {
                   inputRef.current.focus();
                   setStatus(1);
@@ -175,11 +176,17 @@ export function PostDetail(props: Props) {
       </div>
       {open && (
         <PostDetailDialog
+          isAuthor={username === data.author.username}
+          caption={data.caption}
           setOpen={() => setOpen(false)}
           report={(object, reasons) => {
             dispatch(actions.report({ object, reasons, id: data._id }));
             setOpen(false);
             alert('Cảm ơn bạn đã báo cáo cho chúng tôi.');
+          }}
+          edit={caption => {
+            dispatch(actions.edit({ caption, id: data._id }));
+            setOpen(false);
           }}
           unfollow={() => {
             if (following) {

@@ -4,7 +4,7 @@
  *
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { request } from 'utils/request';
 import { useSelector, useDispatch } from 'react-redux';
 import io from 'socket.io-client';
@@ -20,12 +20,17 @@ import ChatItemReply from './components/ChatItemReply';
 import ChatItemSend from './components/ChatItemSend';
 import NewChatDialog from './components/NewChatDialog';
 import timeSince from '../../../utils/timesince';
-
+let renderCount = 0;
 interface Props {}
 
+const socket = io(SOCKET_URL);
+
 export default function ChatPage(props: Props) {
+  renderCount += 1;
+  console.log(renderCount);
+  //=============================================
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
   const { actions } = useChatPageSlice();
   const { chats, searchData } = useSelector(selectChatPage);
   const dispatch = useDispatch();
@@ -34,21 +39,17 @@ export default function ChatPage(props: Props) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [search, setSearch] = useState('');
-  const [limit, setLimit] = useState(20);
   const [skip, setSkip] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState('');
+  const [out, setOut] = useState(false);
   const id = localStorage.getItem('id');
   const token = localStorage.getItem('token');
   const username = localStorage.getItem('username');
   const ref = useRef(document.createElement('div'));
-  const socket = io(SOCKET_URL, {
-    // withCredentials: true,
-    // extraHeaders: {
-    //   'my-custom-header': 'abcd',
-    // },
-  });
+  const limit = 10;
 
   useEffect(() => {
-    dispatch(actions.get({ query: { skip, limit } }));
+    dispatch(actions.get({}));
   }, [actions, dispatch]);
 
   useEffect(() => {
@@ -63,16 +64,39 @@ export default function ChatPage(props: Props) {
       ref.current.scrollTo(0, scroll);
     }
   }
+  function getMoreMessage(sk) {
+    if (!out) {
+      setSkip(sk);
+      request({
+        method: 'POST',
+        url: `/message?skip=${sk}&limit=${limit}`,
+        data: { id: currentMessage },
+      }).then(result => {
+        if (result && !result.messages.length) return setOut(true);
+        if (result && result.messages) {
+          const newArr = result.messages.reverse();
+          setChatMessage([...newArr, ...chatMessage]);
+          ref.current.scrollTo(0, 600);
+        }
+      });
+    }
+  }
+
   function getMessage(id) {
+    setOut(false);
+    setChatMessage([]);
+    setSkip(0);
+    setRoom(undefined);
     request({
       method: 'POST',
-      url: `/message`,
+      url: `/message?skip=${skip}&limit=${limit}`,
       data: { id },
     }).then(result => {
       if (result) {
         socket.emit('room', { room: result.chat._id });
         setRoom(result.chat);
-        setChatMessage(result.messages);
+        setChatMessage(result.messages.reverse());
+        setCurrentMessage(id);
         scrollToBottom();
       }
     });
@@ -97,6 +121,7 @@ export default function ChatPage(props: Props) {
               {chats &&
                 chats.map(item => (
                   <ListItem
+                    key={item._id}
                     user={item.user}
                     current={item % 2 === 0}
                     active={item.user.isOnline}
@@ -118,33 +143,28 @@ export default function ChatPage(props: Props) {
                     />
                     <div className={classes.nameBox}>
                       <div className={classes.rightHeaderName}>{room && room.user && room.user.username}</div>
-                      <div className={classes.rightHeaderActive}>Đang hoạt động</div>
                     </div>
-                    <svg
-                      aria-label="info"
-                      fill="#262626"
-                      height="24"
-                      viewBox="0 0 48 48"
-                      width="24"
-                      className={classes.newChat}
-                      onClick={() => {}}
-                    >
-                      <path d="M24 48C10.8 48 0 37.2 0 24S10.8 0 24 0s24 10.8 24 24-10.8 24-24 24zm0-45C12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21S35.6 3 24 3z" />
-                      <circle clip-rule="evenodd" cx="24" cy="14.8" fill-rule="evenodd" r="2.6" />
-                      <path d="M27.1 35.7h-6.2c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h6.2c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z" />
-                      <path d="M24 35.7c-.8 0-1.5-.7-1.5-1.5V23.5h-1.6c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5H24c.8 0 1.5.7 1.5 1.5v12.2c0 .8-.7 1.5-1.5 1.5z" />
-                    </svg>
                   </div>
                 </div>
-                <div className={classes.contentWrapper} ref={ref}>
-                  {chatMessage &&
-                    chatMessage.map(item => {
-                      if (item.sender._id === id) {
-                        return <ChatItemSend content={item.message} />;
-                      } else {
-                        return <ChatItemReply user={item.sender} content={item.message} />;
+                <div className={classes.contentWrapper}>
+                  <div
+                    className={classes.content}
+                    ref={ref}
+                    onScroll={() => {
+                      if (ref.current.scrollTop === 0 && !out) {
+                        getMoreMessage(skip + 10);
                       }
-                    })}
+                    }}
+                  >
+                    {chatMessage &&
+                      chatMessage.map(item => {
+                        if (item.sender._id === id) {
+                          return <ChatItemSend content={item.message} key={item._id} />;
+                        } else {
+                          return <ChatItemReply user={item.sender} content={item.message} key={item._id} />;
+                        }
+                      })}
+                  </div>
                 </div>
                 <div className={classes.chatWrapper}>
                   <ChatInput

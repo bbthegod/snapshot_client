@@ -16,9 +16,11 @@ import home from '../../../images/home.svg';
 import homeActive from '../../../images/home-active.svg';
 import noti from '../../../images/noti.svg';
 import post from '../../../images/post.svg';
-import direct from '../../../images/direct.svg';
+import direct from '../../../images/direct2.svg';
 import notiActive from '../../../images/noti-active.svg';
 import useStyles from './styles';
+
+const socket = io(SOCKET_URL);
 
 export default function Navigator() {
   const [avatarDropdown, setAvatarDropdown] = useState(false);
@@ -39,12 +41,6 @@ export default function Navigator() {
   const avatar = localStorage.getItem('avatar');
   const id = localStorage.getItem('id');
   const path = history.location.pathname.split('/');
-  const socket = io(SOCKET_URL, {
-    // withCredentials: true,
-    // extraHeaders: {
-    //   'my-custom-header': 'abcd',
-    // },
-  });
   //======================================
   useEffect(() => {
     if (search !== '') {

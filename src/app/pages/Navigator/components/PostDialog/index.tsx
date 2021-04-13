@@ -36,7 +36,7 @@ export default function PostDialog(props: Props) {
       }
     };
     onFileChange();
-  }, []);
+  }, [file]);
   function readFile(file) {
     return new Promise(resolve => {
       const reader = new FileReader();
@@ -48,7 +48,7 @@ export default function PostDialog(props: Props) {
     const croped = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
     onPost({ img: croped, caption });
     onClose();
-    window.location.reload();
+    // window.location.reload();
   }
   return (
     <div className={classes.root}>

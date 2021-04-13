@@ -8,7 +8,7 @@ import autosize from 'autosize';
 import useStyles from './styles';
 import Emoji from './components/Emoji';
 import smile from '../../../../../images/smile.svg';
-import postImage from '../../../../../images/post-image.svg';
+// import postImage from '../../../../../images/post-image.svg';
 import loveIcon from '../../../../../images/unlike.svg';
 
 interface Props {
@@ -57,9 +57,9 @@ export default function ChatInput(props: Props) {
         )}
         {disabled && (
           <div className={classes.sendIconWrapper}>
-            <label htmlFor="input">
+            {/* <label htmlFor="input">
               <img src={postImage} alt="post" className={classes.icon} />
-            </label>
+            </label> */}
             <img src={loveIcon} alt="love" className={classes.icon} onClick={() => onLove()} />
             <input
               id="input"

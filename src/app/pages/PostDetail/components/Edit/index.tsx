@@ -1,45 +1,43 @@
 /**
  *
- * NewChatDialog
+ * Edit
  *
- */ import React from 'react';
+ */ import React, { useState } from 'react';
 import useStyles from './styles';
 import closeIcon from '../../../../../images/close.svg';
-import ListItem from '../ListItem';
 
 interface Props {
   onClose: any;
-  search: any;
-  setSearch: any;
-  data: any;
-  getChat: any;
+  onSubmit: any;
+  caption: any;
 }
 
-export default function NewChatDialog(props: Props) {
-  const { onClose, search, setSearch, data, getChat } = props;
+export default function Edit(props: Props) {
+  const { onClose, onSubmit } = props;
   const classes = useStyles();
+  const [value, setValue] = useState(props.caption);
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
         <div className={classes.item}>
-          <div className={classes.sideItem}>
+          <div className={classes.leftSideItem}>
             <img src={closeIcon} alt="close" className={classes.icon} onClick={() => onClose()} />
           </div>
           <div className={classes.centerItem}>Tin nhắn mới</div>
+          <div className={classes.rightSideItem}>
+            <button className={classes.button} onClick={() => onSubmit(value)}>
+              Gửi
+            </button>
+          </div>
         </div>
         <div className={classes.searchWrapper}>
           <input
             type="text"
-            placeholder="Tìm kiếm"
+            placeholder="Tiêu đề"
             className={classes.input}
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+            value={value}
+            onChange={e => setValue(e.target.value)}
           />
-        </div>
-        <div className={classes.userWrapper}>
-          {data.map(item => (
-            <ListItem user={item.users} subText={item.users.name} onClick={() => getChat(item.users._id)} />
-          ))}
         </div>
       </div>
     </div>

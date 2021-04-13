@@ -5,7 +5,6 @@
  */
 import React from 'react';
 import useStyles from './styles';
-import Avatar from '../../../../components/Avatar';
 
 interface Props {
   content: any;

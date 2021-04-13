@@ -147,6 +147,36 @@ const slice = createSlice({
       state.success = false;
       state.failures = true;
     },
+    edit(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    editSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    editFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    editComment(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    editCommentSuccess(state) {
+      state.loading = false;
+      state.success = true;
+      state.failures = false;
+    },
+    editCommentFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
   },
 });
 

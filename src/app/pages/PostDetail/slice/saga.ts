@@ -3,9 +3,11 @@ import { request } from 'utils/request';
 import serialize from 'utils/serialize';
 import { postDetailActions as actions } from '.';
 let lastGetCommentState = {};
+let lastState = {};
 
 export function* get(payload) {
   try {
+    lastState = payload.payload;
     const respone = yield call(request, {
       method: 'GET',
       url: `/post/${payload.payload}`,
@@ -141,6 +143,41 @@ export function* report(payload) {
   }
 }
 
+export function* edit(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'PUT',
+      url: `/post/${payload.payload.id}`,
+      data: { caption: payload.payload.caption },
+    });
+    if (respone) {
+      yield put(actions.reportSuccess());
+      yield put(actions.get(lastState));
+    } else {
+      yield put(actions.reportFailures());
+    }
+  } catch (err) {
+    yield put(actions.reportFailures());
+  }
+}
+
+export function* editComment(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'PUT',
+      url: `/comment/${payload.payload.id}`,
+      data: { content: payload.payload.content },
+    });
+    if (respone) {
+      yield put(actions.reportSuccess());
+      yield put(actions.getComment(lastGetCommentState));
+    } else {
+      yield put(actions.reportFailures());
+    }
+  } catch (err) {
+    yield put(actions.reportFailures());
+  }
+}
 export function* postDetailSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.getComment.type, getComment);
@@ -150,4 +187,6 @@ export function* postDetailSaga() {
   yield takeLatest(actions.commentReply.type, commentReply);
   yield takeLatest(actions.remove.type, remove);
   yield takeLatest(actions.report.type, report);
+  yield takeLatest(actions.edit.type, edit);
+  yield takeLatest(actions.editComment.type, editComment);
 }

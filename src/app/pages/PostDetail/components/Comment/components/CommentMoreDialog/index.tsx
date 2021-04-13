@@ -10,6 +10,7 @@ import useStyles from './styles';
 interface Props {
   onClose: any;
   remove: any;
+  edit: any;
 }
 
 interface Props {}
@@ -25,6 +26,9 @@ export default function CommentMoreDialog(props: Props) {
       <div className={classes.wrapper} ref={ref}>
         <div className={classes.item} onClick={() => props.remove()}>
           <p className={classes.textRed}>Xoá</p>
+        </div>
+        <div className={classes.item} onClick={() => props.edit()}>
+          <p className={classes.text}>Chỉnh sửa</p>
         </div>
         <div className={classes.item} onClick={() => props.onClose()}>
           <p className={classes.text}>Hủy</p>
