@@ -48,7 +48,6 @@ export default function PostDialog(props: Props) {
     const croped = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
     onPost({ img: croped, caption });
     onClose();
-    // window.location.reload();
   }
   return (
     <div className={classes.root}>

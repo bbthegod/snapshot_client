@@ -16,6 +16,7 @@ interface Props {
   copy: any;
   caption: any;
   edit: any;
+  remove: any;
 }
 
 interface Props {}
@@ -42,11 +43,26 @@ export default function PostDetailDialog(props: Props) {
                 </div>
               </>
             )}
+            {props.isAuthor && (
+              <>
+                <div
+                  className={classes.item}
+                  onClick={() => {
+                    var r = window.confirm('Xoá bài viết !');
+                    if (r === true) {
+                      props.remove();
+                    }
+                  }}
+                >
+                  <p className={classes.textRed}>Xoá</p>
+                </div>
+                <div className={classes.item} onClick={() => setStatus(3)}>
+                  <p className={classes.text}>Chỉnh sửa</p>
+                </div>
+              </>
+            )}
             <div className={classes.item} onClick={() => props.copy()}>
               <p className={classes.text}>Sao chép liên kết</p>
-            </div>
-            <div className={classes.item} onClick={() => setStatus(3)}>
-              <p className={classes.text}>Chỉnh sửa</p>
             </div>
             <div className={classes.item} onClick={() => props.setOpen()}>
               <p className={classes.text}>Hủy</p>

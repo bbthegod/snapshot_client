@@ -113,7 +113,16 @@ export function Post(props: Props) {
             <img src={more} alt="more" className={classes.more} onClick={() => setOpen(true)} />
           </div>
         </div>
-        <img src={`${HOST}/post/${data.author._id}/${data._id}/original.jpg`} alt="post" className={classes.imgPost} />
+        <img
+          src={`${HOST}/post/${data.author._id}/${data._id}/original.jpg`}
+          alt="post"
+          className={classes.imgPost}
+          onDoubleClick={() => {
+            if (!liked) {
+              likePost();
+            }
+          }}
+        />
         <div className={classes.likeWrapper}>
           <img src={liked ? like : unlike} alt="like" className={classes.like} onClick={() => likePost()} />
           <img src={commentIcon} alt="comment" className={classes.like} onClick={() => inputRef.current.focus()} />
@@ -126,15 +135,17 @@ export function Post(props: Props) {
         </div>
         <div className={classes.commentWrapper}>
           <div className={classes.captionsWrapper}>
-            <span className={classes.username}>
-              {data.name}&nbsp;
-              <span className={classes.fistLine}>
-                {trimmed && trimmed[0] && trimmed[0]}
-                <span onClick={() => setSeeMore(false)} className={classes.seeMore}>
-                  {trimmed && trimmed[1] && seeMore && '...thêm'}
+            {data.caption && (
+              <span className={classes.username}>
+                {data.author.username}&nbsp;
+                <span className={classes.fistLine}>
+                  {trimmed && trimmed[0] && trimmed[0]}
+                  <span onClick={() => setSeeMore(false)} className={classes.seeMore}>
+                    {trimmed && trimmed[1] && seeMore && '...thêm'}
+                  </span>
                 </span>
               </span>
-            </span>
+            )}
             <pre className={classes.afterLine}>{trimmed && trimmed[1] && !seeMore && trimmed[1]}</pre>
             <div className={classes.seeAllCommentsWrapper}>
               {numberOfComments > 3 && numberOfComments !== -1 && (

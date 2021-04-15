@@ -178,6 +178,23 @@ export function* editComment(payload) {
     yield put(actions.reportFailures());
   }
 }
+
+export function* removePost(payload) {
+  try {
+    const respone = yield call(request, {
+      method: 'DELETE',
+      url: `/post/${payload.payload.id}`,
+    });
+    if (respone) {
+      yield put(actions.removePostSuccess());
+    } else {
+      yield put(actions.removePostFailures());
+    }
+  } catch (err) {
+    yield put(actions.removePostFailures());
+  }
+}
+
 export function* postDetailSaga() {
   yield takeLatest(actions.get.type, get);
   yield takeLatest(actions.getComment.type, getComment);
@@ -189,4 +206,5 @@ export function* postDetailSaga() {
   yield takeLatest(actions.report.type, report);
   yield takeLatest(actions.edit.type, edit);
   yield takeLatest(actions.editComment.type, editComment);
+  yield takeLatest(actions.removePost.type, removePost);
 }

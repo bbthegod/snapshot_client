@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import useOutsideClick from 'utils/useOutsideClick';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigatorSlice } from './slice';
+import { useChatPageSlice } from '../ChatPage/slice/index';
 import { selectNavigator } from './slice/selectors';
 import io from 'socket.io-client';
 import { SOCKET_URL } from 'utils/url';
@@ -30,7 +31,8 @@ export default function Navigator() {
   const [file, setFile] = useState();
   //======================================
   const { actions } = useNavigatorSlice();
-  const { searchData, loading, snackbar, message, notifications } = useSelector(selectNavigator);
+  const { actions: chatActions } = useChatPageSlice();
+  const { searchData, loading, snackbar, message, notifications, postSuccess } = useSelector(selectNavigator);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -42,11 +44,18 @@ export default function Navigator() {
   const id = localStorage.getItem('id');
   const path = history.location.pathname.split('/');
   //======================================
+  socket.on('new room', () => dispatch(chatActions.get({})));
   useEffect(() => {
     if (search !== '') {
       dispatch(actions.search(search));
     }
   }, [actions, dispatch, search]);
+
+  useEffect(() => {
+    if (postSuccess) {
+      window.location.reload();
+    }
+  }, [postSuccess]);
 
   useEffect(() => {
     socket.emit('login', {

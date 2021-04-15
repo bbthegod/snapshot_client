@@ -10,6 +10,7 @@ export const initialState: NavigatorState = {
   snackbar: false,
   loading: false,
   success: false,
+  postSuccess: false,
   failures: false,
   message: false,
 };
@@ -81,7 +82,7 @@ const slice = createSlice({
     },
     postSuccess(state) {
       state.loading = false;
-      state.success = true;
+      state.postSuccess = true;
       state.failures = false;
     },
     postFailures(state) {

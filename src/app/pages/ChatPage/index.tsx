@@ -3,7 +3,7 @@
  * ChatPage
  *
  */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 // import { useHistory } from 'react-router-dom';
 import { request } from 'utils/request';
 import { useSelector, useDispatch } from 'react-redux';
@@ -37,7 +37,6 @@ export default function ChatPage(props: Props) {
   const [chatMessage, setChatMessage] = useState<any[]>([]);
   const [room, setRoom] = useState<any>();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
   const [search, setSearch] = useState('');
   const [skip, setSkip] = useState(0);
   const [currentMessage, setCurrentMessage] = useState('');
@@ -48,9 +47,20 @@ export default function ChatPage(props: Props) {
   const ref = useRef(document.createElement('div'));
   const limit = 10;
 
+  const sock = useCallback(() => {
+    socket.on('return message', message => {
+      setChatMessage(oldArray => [...oldArray, message]);
+      scrollToBottom();
+    });
+  }, []);
+
   useEffect(() => {
     dispatch(actions.get({}));
   }, [actions, dispatch]);
+
+  useEffect(() => {
+    sock();
+  }, [sock]);
 
   useEffect(() => {
     if (search !== '') {
@@ -102,10 +112,6 @@ export default function ChatPage(props: Props) {
     });
   }
   // ===========================================================================
-  socket.on('return message', message => {
-    setChatMessage(oldArray => [...oldArray, message]);
-    scrollToBottom();
-  });
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
@@ -126,7 +132,10 @@ export default function ChatPage(props: Props) {
                     current={item % 2 === 0}
                     active={item.user.isOnline}
                     subText={timeSince(item.lastTimeActive)}
-                    onClick={() => getMessage(item.user._id)}
+                    onClick={() => {
+                      getMessage(item.user._id);
+                      dispatch(actions.get({}));
+                    }}
                   />
                 ))}
             </div>
@@ -157,38 +166,25 @@ export default function ChatPage(props: Props) {
                     }}
                   >
                     {chatMessage &&
-                      chatMessage.map(item => {
+                      chatMessage.map((item, index) => {
                         if (item.sender._id === id) {
-                          return <ChatItemSend content={item.message} key={item._id} />;
+                          return <ChatItemSend content={item.message} key={index} />;
                         } else {
-                          return <ChatItemReply user={item.sender} content={item.message} key={item._id} />;
+                          return <ChatItemReply user={item.sender} content={item.message} key={index} />;
                         }
                       })}
                   </div>
                 </div>
                 <div className={classes.chatWrapper}>
                   <ChatInput
-                    value={value}
-                    onChange={e => setValue(e)}
-                    onSubmit={() => {
+                    onSubmit={value => {
                       socket.emit('message', {
                         token,
                         command: 1000,
                         room: room && room._id,
                         message: value,
                       });
-                      setValue('');
                     }}
-                    onLove={() => {
-                      socket.emit('message', {
-                        token,
-                        command: 1000,
-                        room: room && room._id,
-                        message: '❤️',
-                      });
-                      setValue('');
-                    }}
-                    disabled={value === ''}
                   />
                 </div>
               </>
@@ -203,7 +199,7 @@ export default function ChatPage(props: Props) {
           setSearch={e => setSearch(e)}
           data={searchData}
           getChat={id => {
-            dispatch(getMessage(id));
+            getMessage(id);
             setOpen(false);
           }}
         />

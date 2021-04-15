@@ -27,10 +27,15 @@ export function PostDetail(props: Props) {
   const [status, setStatus] = useState(0);
   const [limit, setLimit] = useState(12);
   const { actions } = usePostDetailSlice();
-  const { data, postFailures, following, comments, liked, count } = useSelector(selectPostDetail);
+  const { data, postFailures, following, comments, liked, count, removeSuccess } = useSelector(selectPostDetail);
   const dispatch = useDispatch();
   const inputRef = useRef(document.createElement('input'));
   const username = localStorage.getItem('username');
+  useEffect(() => {
+    if (removeSuccess) {
+      window.history.back();
+    }
+  }, [removeSuccess]);
   useEffect(() => {
     if (props.match.params.post) {
       dispatch(actions.get(props.match.params.post));
@@ -104,22 +109,24 @@ export function PostDetail(props: Props) {
           </div>
 
           <div className={classes.commentWrapper}>
-            <div className={classes.captionWrapper}>
-              <div className={classes.captionAvatarWrapper}>
-                <img
-                  src={data.author.avatar ? `${HOST}/avatar/${data.author._id}/medium.jpg` : nasmall}
-                  alt="avatar"
-                  className={classes.avatar}
-                />
-              </div>
-              <div className={classes.contentWrapper2}>
-                <div className={classes.captionName}>{data.author.username}</div>
-                {data.caption}
-                <div className={classes.captionReaction}>
-                  <div className={classes.captionTime}>{timeSince(data.createdAt)}</div>
+            {data.caption && (
+              <div className={classes.captionWrapper}>
+                <div className={classes.captionAvatarWrapper}>
+                  <img
+                    src={data.author.avatar ? `${HOST}/avatar/${data.author._id}/medium.jpg` : nasmall}
+                    alt="avatar"
+                    className={classes.avatar}
+                  />
+                </div>
+                <div className={classes.contentWrapper2}>
+                  <div className={classes.captionName}>{data.author.username}</div>
+                  {data.caption}
+                  <div className={classes.captionReaction}>
+                    <div className={classes.captionTime}>{timeSince(data.createdAt)}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {comments.map(item => (
               <Comment
                 data={item}
@@ -186,6 +193,10 @@ export function PostDetail(props: Props) {
           }}
           edit={caption => {
             dispatch(actions.edit({ caption, id: data._id }));
+            setOpen(false);
+          }}
+          remove={caption => {
+            dispatch(actions.removePost({ id: data._id }));
             setOpen(false);
           }}
           unfollow={() => {

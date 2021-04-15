@@ -9,5 +9,6 @@ export interface PostDetailState {
   postSuccess: boolean;
   postFailures: boolean;
   success: boolean;
+  removeSuccess: boolean;
   failures: boolean;
 }

@@ -14,6 +14,7 @@ export const initialState: PostDetailState = {
   failures: false,
   postSuccess: false,
   postFailures: false,
+  removeSuccess: false,
 };
 
 const slice = createSlice({
@@ -173,6 +174,21 @@ const slice = createSlice({
       state.failures = false;
     },
     editCommentFailures(state) {
+      state.loading = false;
+      state.success = false;
+      state.failures = true;
+    },
+    removePost(state, payload) {
+      state.loading = true;
+      state.success = false;
+      state.failures = false;
+    },
+    removePostSuccess(state) {
+      state.loading = false;
+      state.removeSuccess = true;
+      state.failures = false;
+    },
+    removePostFailures(state) {
       state.loading = false;
       state.success = false;
       state.failures = true;
