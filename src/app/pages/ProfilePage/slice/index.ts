@@ -13,6 +13,8 @@ export const initialState: ProfilePageState = {
   failures: false,
   profileSuccess: false,
   profileFailures: false,
+  out1: false,
+  out2: false,
 };
 
 const slice = createSlice({
@@ -58,7 +60,11 @@ const slice = createSlice({
       state.failures = false;
     },
     getPostSuccess(state, action) {
-      state.posts = action.payload;
+      if (!action.payload.length) {
+        state.out1 = true;
+      } else {
+        state.posts = [...state.posts, ...action.payload];
+      }
       state.loading = false;
       state.success = true;
       state.failures = false;
@@ -74,7 +80,11 @@ const slice = createSlice({
       state.failures = false;
     },
     getSavedSuccess(state, action) {
-      state.saved = action.payload;
+      if (!action.payload.length) {
+        state.out2 = true;
+      } else {
+        state.saved = [...state.saved, ...action.payload];
+      }
       state.loading = false;
       state.success = true;
       state.failures = false;

@@ -5,4 +5,5 @@ export interface FeedPageState {
   loading: boolean;
   success: boolean;
   failures: boolean;
+  out: boolean;
 }

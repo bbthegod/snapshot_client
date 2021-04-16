@@ -7,8 +7,9 @@ let lastQuery = {};
 export function* get(payload) {
   try {
     const respone = yield call(request, {
-      method: 'GET',
+      method: 'POST',
       url: `/feed`,
+      data: { duplicated: payload.payload.duplicated },
     });
     if (respone) {
       yield put(actions.getSuccess(respone));

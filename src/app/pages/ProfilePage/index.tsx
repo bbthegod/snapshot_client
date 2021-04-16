@@ -3,7 +3,7 @@
  * ProfilePage
  *
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ProfilePost } from 'app/pages/ProfilePage/components/ProfilePost';
 import { useSelector, useDispatch } from 'react-redux';
@@ -31,24 +31,49 @@ export function ProfilePage(props: Props) {
   const [openSetting, setOpenSetting] = useState(false);
   const [openMore, setOpenMore] = useState(false);
   const [openFollow, setOpenFollow] = useState(false);
+  const [skip1, setSkip1] = useState(0);
+  const [skip2, setSkip2] = useState(0);
   //===============================================================
   const history = useHistory();
   const classes = useStyles();
   const { actions } = useProfilePageSlice();
   const dispatch = useDispatch();
-  const { user, profileFailures, posts, saved, following } = useSelector(selectProfilePage);
+  const { user, profileFailures, posts, saved, following, out1, out2 } = useSelector(selectProfilePage);
+  const outOfPost1 = useMemo(() => out1, [out1]);
+  const outOfPost2 = useMemo(() => out2, [out2]);
+  const ref = useRef(document.createElement('div'));
   //================================================================
+  const listenToScroll = useCallback(() => {
+    const bottom = ref.current.clientHeight === window.innerHeight + window.scrollY;
+    if (bottom) {
+      if (!outOfPost1 && tab === 1) {
+        setSkip1(skip1 + 9);
+      }
+      if (!outOfPost2 && tab === 2) {
+        setSkip2(skip2 + 9);
+      }
+    }
+  }, [outOfPost1, outOfPost2, skip1, skip2, tab]);
+
   useEffect(() => {
-    dispatch(actions.getPost(props.match.params.username));
-    dispatch(actions.getSaved(props.match.params.username));
-  }, [actions, dispatch, props.match.params.username]);
+    if (tab === 1) {
+      dispatch(actions.getPost({ id: props.match.params.username, query: { skip: skip1, limit: 9 } }));
+    } else {
+      dispatch(actions.getSaved({ id: props.match.params.username, query: { skip: skip2, limit: 9 } }));
+    }
+  }, [actions, dispatch, props.match.params.username, skip1, skip2, tab]);
 
   useEffect(() => {
     dispatch(actions.get(props.match.params.username));
   }, [actions, dispatch, props.match.params.username, following]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', listenToScroll);
+    return () => window.removeEventListener('scroll', listenToScroll);
+  }, [listenToScroll]);
   //================================================================
   return (
-    <div>
+    <div ref={ref}>
       {user && !profileFailures ? (
         <div className={classes.root}>
           <div className={classes.wrapper}>

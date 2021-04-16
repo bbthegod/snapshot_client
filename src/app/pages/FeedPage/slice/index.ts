@@ -9,19 +9,24 @@ export const initialState: FeedPageState = {
   loading: false,
   success: false,
   failures: false,
+  out: false,
 };
 
 const slice = createSlice({
   name: 'feedPage',
   initialState,
   reducers: {
-    get(state) {
+    get(state, payload) {
       state.loading = true;
       state.success = false;
       state.failures = false;
     },
     getSuccess(state, action) {
-      state.posts = action.payload;
+      if (!action.payload.length) {
+        state.out = true;
+      } else {
+        state.posts = [...state.posts, ...action.payload];
+      }
       state.loading = false;
       state.success = true;
       state.failures = false;

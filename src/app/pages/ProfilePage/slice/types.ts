@@ -9,4 +9,6 @@ export interface ProfilePageState {
   failures: boolean;
   profileSuccess: boolean;
   profileFailures: boolean;
+  out1: boolean;
+  out2: boolean;
 }

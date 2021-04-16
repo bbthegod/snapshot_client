@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { request } from 'utils/request';
+import serialize from 'utils/serialize';
 import { profilePageActions as actions } from '.';
 
 export function* get(payload) {
@@ -39,7 +40,7 @@ export function* getPost(payload) {
   try {
     const respone = yield call(request, {
       method: 'GET',
-      url: `/post/user/${payload.payload}`,
+      url: `/post/user/${payload.payload.id}?${serialize(payload.payload.query)}`,
     });
     if (respone) {
       yield put(actions.getPostSuccess(respone));
@@ -55,7 +56,7 @@ export function* getSaved(payload) {
   try {
     const respone = yield call(request, {
       method: 'GET',
-      url: `/savedPost/user/${payload.payload}`,
+      url: `/savedPost/user/${payload.payload.id}?${serialize(payload.payload.query)}`,
     });
     if (respone) {
       yield put(actions.getSavedSuccess(respone));

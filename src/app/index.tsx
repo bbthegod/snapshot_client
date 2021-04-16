@@ -28,8 +28,8 @@ import ChatPage from './pages/ChatPage';
 export function App() {
   return (
     <BrowserRouter>
-      <Helmet titleTemplate="%s - React Boilerplate" defaultTitle="React Boilerplate">
-        <meta name="description" content="A React Boilerplate application" />
+      <Helmet titleTemplate="%s - SnapShot" defaultTitle="SnapShot">
+        <meta name="description" content="SnapShot" />
       </Helmet>
 
       <Switch>
