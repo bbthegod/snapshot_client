@@ -45,6 +45,8 @@ export default function Navigator() {
   const path = history.location.pathname.split('/');
   //======================================
   socket.on('new room', () => dispatch(chatActions.get({})));
+  socket.on('notification trigger', () => dispatch(actions.getNoti()));
+
   useEffect(() => {
     if (search !== '') {
       dispatch(actions.search(search));
@@ -70,7 +72,8 @@ export default function Navigator() {
 
   useEffect(() => {
     dispatch(actions.getNoti());
-  }, [actions, dispatch, notiDropdown]);
+  }, [actions, dispatch]);
+
   useOutsideClick(refNoti, () => {
     setNotiDropdown(false);
   });
